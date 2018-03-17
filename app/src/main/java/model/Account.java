@@ -7,57 +7,45 @@ package model;
 public class Account {
 
     int userid;
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getEmailaddress() {
+        return emailaddress;
+    }
+
+    public String getAccounttype() {
+        return accounttype;
+    }
+
+    public boolean isAccountstatus() {
+        return accountstatus;
+    }
+
+    public Account(int userid, String firstname, String lastname, String emailaddress, String accounttype, boolean accountstatus) {
+
+        this.userid = userid;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.emailaddress = emailaddress;
+        this.accounttype = accounttype;
+        this.accountstatus = accountstatus;
+    }
+
     String firstname,lastname,emailaddress,accounttype;
     boolean accountstatus;
 
     public Account() {
     }
 
-    public int getUserID() {
-        return userid;
-    }
-
-    public void setUserID(int userid) {
-        this.userid = userid;
-    }
-
-    public String getFirstName() {
-        return firstname;
-    }
-
-    public void setFirstName(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastName() {
-        return lastname;
-    }
-
-    public void setLastName(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getEmailAddress() {
-        return emailaddress;
-    }
-
-    public void setEmailAddress(String emailaddress) {
-        this.emailaddress = emailaddress;
-    }
-
-    public boolean getAccountStatus() {
-        return accountstatus;
-    }
-
-    public void setAccountStatus(boolean accountstatus) {
-        this.accountstatus = accountstatus;
-    }
-
-    public String getAccountType() {
-        return accounttype;
-    }
-
-    public void setAccountType(String accounttype) {
-        this.accounttype = accounttype;
-    }
 }

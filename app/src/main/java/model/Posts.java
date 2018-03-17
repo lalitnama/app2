@@ -15,52 +15,36 @@ public class Posts {
     public Posts() {
     }
 
-    public String getTrailStationID() {
+    public Posts(String trailstationid, String learningtrailid, String userid, String post, Date timestamp, int postid) {
+        this.trailstationid = trailstationid;
+        this.learningtrailid = learningtrailid;
+        this.userid = userid;
+        this.post = post;
+        this.timestamp = timestamp;
+        this.postid = postid;
+    }
+
+    public String getTrailstationid() {
         return trailstationid;
     }
 
-    public void setTrailStationID(String trailstationid) {
-        this.trailstationid = trailstationid;
-    }
-
-    public String getLearningTrailID() {
+    public String getLearningtrailid() {
         return learningtrailid;
     }
 
-    public void setLearningTrailID(String learningtrailid) {
-        this.learningtrailid = learningtrailid;
-    }
-
-    public String getUserID() {
+    public String getUserid() {
         return userid;
-    }
-
-    public void setUserID(String userid) {
-        this.userid = userid;
     }
 
     public String getPost() {
         return post;
     }
 
-    public void setPost(String post) {
-        this.post = post;
-    }
-
-    public int getPostID() {
-        return postid;
-    }
-
-    public void setPostID(int postid) {
-        this.postid = postid;
-    }
-
     public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public int getPostid() {
+        return postid;
     }
-
 }

@@ -14,43 +14,31 @@ public class LearningTrial {
     public LearningTrial() {
     }
 
-    public String getLearningTrailID() {
+    public LearningTrial(String learningtrailid, String userid, String traildate, String trailname, Date timestamp) {
+        this.learningtrailid = learningtrailid;
+        this.userid = userid;
+        this.traildate = traildate;
+        this.trailname = trailname;
+        this.timestamp = timestamp;
+    }
+
+    public String getLearningtrailid() {
         return learningtrailid;
     }
 
-    public void setLearningTrailID(String learningtrailid) {
-        this.learningtrailid = learningtrailid;
-    }
-
-    public String getUserID() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserID(String userid) {
-        this.userid = userid;
-    }
-
-    public String getTrailDate() {
+    public String getTraildate() {
         return traildate;
     }
 
-    public void setTrailDate(String traildate) {
-        this.traildate = traildate;
-    }
-
-    public String getTrailName() {
+    public String getTrailname() {
         return trailname;
-    }
-
-    public void setTrailName(String trailname) {
-        this.trailname = trailname;
     }
 
     public Date getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
     }
 }

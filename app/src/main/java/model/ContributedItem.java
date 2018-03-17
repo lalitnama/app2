@@ -14,67 +14,41 @@ public class ContributedItem {
     public ContributedItem() {
     }
 
-    public String getTrailStationID() {
-        return trailstationid;
-    }
-
-    public void setTrailStationID(String trailstationid) {
+    public ContributedItem(String trailstationid, String learningtrailid, String userid, String fileurl, String filedescription, Date timestamp, int itemid) {
         this.trailstationid = trailstationid;
-    }
-
-
-
-    public String getLearningTrailID() {
-        return learningtrailid;
-    }
-
-    public void setLearningTrailID(String learningtrailid) {
         this.learningtrailid = learningtrailid;
-    }
-
-    public String getFileUrl() {
-        return fileurl;
-    }
-
-    public void setFileUrl(String fileurl) {
-        this.fileurl = fileurl;
-    }
-
-
-    public String getFileDescription() {
-        return filedescription;
-    }
-
-    public void setFileDescription(String filedescription) {
-        this.filedescription = filedescription;
-    }
-
-
-    public String getUserID() {
-        return userid;
-    }
-
-    public void setUserID(String userid) {
         this.userid = userid;
-    }
-
-
-
-    public int getItemID() {
-        return itemid;
-    }
-
-    public void setItemID(int itemid) {
+        this.fileurl = fileurl;
+        this.filedescription = filedescription;
+        this.timestamp = timestamp;
         this.itemid = itemid;
     }
 
+    public String getTrailstationid() {
+        return trailstationid;
+    }
+
+    public String getLearningtrailid() {
+        return learningtrailid;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public String getFileurl() {
+        return fileurl;
+    }
+
+    public String getFiledescription() {
+        return filedescription;
+    }
 
     public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public int getItemid() {
+        return itemid;
     }
-
 }

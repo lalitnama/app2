@@ -11,52 +11,36 @@ public class TrailStation {
     public TrailStation() {
     }
 
-    public String getTrailStationID() {
+    public TrailStation(String trailstationid, String trailid, String glocation, String name, String instruction, int sequenceid) {
+        this.trailstationid = trailstationid;
+        this.trailid = trailid;
+        this.glocation = glocation;
+        this.name = name;
+        this.instruction = instruction;
+        this.sequenceid = sequenceid;
+    }
+
+    public String getTrailstationid() {
         return trailstationid;
     }
 
-    public void setTrailStationID(String trailstationid) {
-        this.trailstationid = trailstationid;
-    }
-
-    public String getTrailID() {
+    public String getTrailid() {
         return trailid;
     }
 
-    public void setTrailID(String trailid) {
-        this.trailid = trailid;
-    }
-
-    public String getGeoLocation() {
+    public String getGlocation() {
         return glocation;
-    }
-
-    public void setGeoLocation(String glocation) {
-        this.glocation = glocation;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getInstruction() {
         return instruction;
     }
 
-    public void setInstruction(String instruction) {
-        this.instruction = instruction;
-    }
-
-    public int getSquenceID() {
+    public int getSequenceid() {
         return sequenceid;
     }
-
-    public void setSquenceID(int sequenceid) {
-        this.sequenceid = sequenceid;
-    }
-
 }
