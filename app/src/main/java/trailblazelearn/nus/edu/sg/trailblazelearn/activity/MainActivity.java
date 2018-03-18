@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() !=null){
-                    Intent i = new Intent(MainActivity.this, ModuleListActivity.class);
+                    Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
                     startActivity(i);
                 }else{
 
