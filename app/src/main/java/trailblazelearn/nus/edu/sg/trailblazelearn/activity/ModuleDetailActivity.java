@@ -1,4 +1,4 @@
-package trailblazelearn.nus.edu.sg.trailblazelearn;
+package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +11,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
-/**
- * An activity representing a single Module detail screen. This
- * activity is only used on narrow width devices. On tablet-size devices,
- * item details are presented side-by-side with a list of items
- * in a {@link ModuleListActivity}.
- */
+import trailblazelearn.nus.edu.sg.trailblazelearn.R;
+import trailblazelearn.nus.edu.sg.trailblazelearn.fragment.ModuleDetailFragment;
+
 public class ModuleDetailActivity extends AppCompatActivity {
 
     @Override

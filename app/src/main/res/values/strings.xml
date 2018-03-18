@@ -26,4 +26,11 @@
     <string name="action_settings">Settings</string>
     <string name="logout">Log Out</string>
     <string name="delete">DELETE</string>
+    <string name="title_activity_layout">LayoutActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_learning_trail">LearningTrailActivity</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
 </resources>

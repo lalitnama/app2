@@ -1,4 +1,5 @@
-package trailblazelearn.nus.edu.sg.trailblazelearn;
+package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,22 +23,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import trailblazelearn.nus.edu.sg.trailblazelearn.R;
+
+
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import trailblazelearn.nus.edu.sg.trailblazelearn.dummy.DummyContent;
+import trailblazelearn.nus.edu.sg.trailblazelearn.fragment.ModuleDetailFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * An activity representing a list of Modules. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link ModuleDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
 public class ModuleListActivity extends AppCompatActivity {
 
     /**
