@@ -1,5 +1,6 @@
 package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,16 +22,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import adapter.LearningTrailAdapter;
+import fao.ManageLearningTrail;
+import model.LearningTrial;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 import trailblazelearn.nus.edu.sg.trailblazelearn.dummy.DummyContent;
 import trailblazelearn.nus.edu.sg.trailblazelearn.fragment.LearningTrailDetailFragment;
@@ -41,6 +52,8 @@ public class LearningTrailActivity extends AppCompatActivity
     private boolean mTwoPane;
     private RecyclerView recyclerView;
     private LearningTrailAdapter mAdapter;
+    DatabaseReference db;
+    ManageLearningTrail trailhelper;
 
 
 
@@ -68,8 +81,10 @@ public class LearningTrailActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        //.setAction("Action", null).show();
+
+                displayInputDialog();
             }
         });
 
@@ -110,8 +125,14 @@ public class LearningTrailActivity extends AppCompatActivity
         recyclerView = findViewById(R.id.module_list);
 
 
+        //INITIALIZE FIREBASE DB
+        db= FirebaseDatabase.getInstance().getReference();
+        trailhelper=new ManageLearningTrail(db);
 
-        mAdapter = new LearningTrailAdapter(this, DummyContent.ITEMS);
+        //ADAPTER
+        mAdapter=new LearningTrailAdapter(this,trailhelper.retrieve());
+        recyclerView.setAdapter(mAdapter);
+
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -123,7 +144,67 @@ public class LearningTrailActivity extends AppCompatActivity
 
     }
 
+    EditText trailName,trailID,userID;
 
+    //DISPLAY INPUT DIALOG
+    private void displayInputDialog()
+    {
+        Dialog d=new Dialog(this);
+        d.setTitle("Save To Firebase");
+        d.setContentView(R.layout.add_learningtrail_dailogue);
+
+        trailName= (EditText) d.findViewById(R.id.addTrailName);
+        trailID= (EditText) d.findViewById(R.id.addTrailID);
+        userID= (EditText) d.findViewById(R.id.addUserID);
+        Button saveBtn= (Button) d.findViewById(R.id.buttonAddtrail);
+        Button deleteBtn= (Button) d.findViewById(R.id.buttonDeleteTrail);
+
+        //SAVE
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //GET DATA
+                String tailname=trailName.getText().toString();
+                String trailid=trailID.getText().toString();
+                String userid=userID.getText().toString();
+                String id = db.push().getKey();
+                String username=userID.getText().toString();
+                Date c = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                String formattedDate = df.format(c);
+
+                Long tsLong = System.currentTimeMillis()/1000;
+                String ts = tsLong.toString();
+
+                //SET DATA
+                LearningTrial s=new LearningTrial(trailid,userid,formattedDate,tailname,ts,tailname);
+
+
+
+                //SIMPLE VALIDATION
+                if(tailname != null && tailname.length()>0)
+                {
+                    //THEN SAVE
+                    if(trailhelper.save(s))
+                    {
+                        //IF SAVED CLEAR EDITXT
+
+                        mAdapter=new LearningTrailAdapter(LearningTrailActivity.this,trailhelper.retrieve());
+                        recyclerView.setAdapter(mAdapter);
+
+
+                    }
+                }else
+                {
+                    Toast.makeText(LearningTrailActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        d.show();
+    }
 
 
 
