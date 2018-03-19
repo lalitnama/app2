@@ -65,9 +65,9 @@ public class DummyAdapter extends RecyclerView.Adapter<DummyAdapter.MyViewHolder
         public MyViewHolder(View view) {
             super(view);
 
-            content = (TextView) view.findViewById(R.id.content);
-            details = (TextView) view.findViewById(R.id.details);
-            id = (TextView) view.findViewById(R.id.id);
+            content = (TextView) view.findViewById(R.id.learningtrailname);
+            details = (TextView) view.findViewById(R.id.learningtrailid);
+            id = (TextView) view.findViewById(R.id.userid);
             thumbnail = view.findViewById(R.id.thumbnail);
             viewBackground = view.findViewById(R.id.view_background);
             viewForeground = view.findViewById(R.id.view_foreground);
