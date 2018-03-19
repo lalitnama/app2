@@ -30,8 +30,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -64,6 +67,19 @@ public class LearningTrailActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mAdapter=new LearningTrailAdapter(LearningTrailActivity.this,trailhelper.retrieve());
+                recyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
@@ -123,22 +139,23 @@ public class LearningTrailActivity extends AppCompatActivity
 
 
         recyclerView = findViewById(R.id.module_list);
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //INITIALIZE FIREBASE DB
         db= FirebaseDatabase.getInstance().getReference();
         trailhelper=new ManageLearningTrail(db);
 
         //ADAPTER
-        mAdapter=new LearningTrailAdapter(this,trailhelper.retrieve());
+
+        mAdapter=new LearningTrailAdapter(LearningTrailActivity.this,trailhelper.retrieve());
         recyclerView.setAdapter(mAdapter);
 
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(mAdapter);
+        //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        //recyclerView.setLayoutManager(mLayoutManager);
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        //recyclerView.setAdapter(mAdapter);
 
 
 

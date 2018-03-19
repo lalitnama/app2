@@ -42,6 +42,7 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
         holder.learningtrailid.setText(mValues.get(position).getLearningtrailid());
         holder.trailname.setText(mValues.get(position).getTrailname());
         holder.userid.setText(mValues.get(position).getUserid());
@@ -49,6 +50,7 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
 
         holder.itemView.setTag(mValues.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);
+
     }
 
 
