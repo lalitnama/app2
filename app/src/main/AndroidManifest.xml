@@ -42,7 +42,14 @@
             android:name=".activity.LearningTrailActivity"
             android:label="@string/title_activity_learning_trail"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.LearningTrailDetailActivity"></activity>
+        <activity android:name=".activity.LearningTrailDetailActivity" />
+
+        <activity android:name=".activity.AddLearningTrailActivity"
+            android:parentActivityName=".activity.LearningTrailActivity"></activity>
+
+
+
+
     </application>
 
 </manifest>

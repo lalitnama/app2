@@ -99,8 +99,9 @@ public class LearningTrailActivity extends AppCompatActivity
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         //.setAction("Action", null).show();
-
-                displayInputDialog();
+                Intent i = new Intent(LearningTrailActivity.this, AddLearningTrailActivity.class);
+                startActivity(i);
+               // displayInputDialog();
             }
         });
 
