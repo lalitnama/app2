@@ -92,5 +92,22 @@ public class ManageLearningTrail {
         return learningTrials;
     }
 
+    public boolean remove(int position){
+        LearningTrial lt = learningTrials.get(position);
+        db.child("LearningTrial").child(lt.getLearningtrailid()).setValue(null);
+        return true;
+    }
+
+    public String getTrailId(int position){
+        LearningTrial lt = learningTrials.get(position);
+        return lt.getLearningtrailid();//Todo, we may need the unique identofier key of trailid instead of trailid that user entered.
+    }
+
+    //READ THEN RETURN ARRAYLIST
+    public LearningTrial retrieveTrailbyId(String TrailId) {
+        //ToDO
+        //Learning trail object and return to UI so that can get data.
+        return null;
+    }
 }
 

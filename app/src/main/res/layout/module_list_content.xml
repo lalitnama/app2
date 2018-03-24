@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
     <RelativeLayout
         android:id="@+id/view_background"
         android:layout_width="match_parent"
@@ -30,11 +29,10 @@
             android:textSize="13dp" />
 
     </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/view_foreground"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="103dp"
         android:background="@android:color/white"
         android:padding="@dimen/padd_10">
 
@@ -53,6 +51,7 @@
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
             android:maxLines="1"
+            android:text="TrailID"
             android:textColor="@color/item_name"
             android:textSize="17dp" />
 
@@ -63,6 +62,7 @@
             android:layout_below="@id/learningtrailid"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/thumbnail"
+            android:text="TrailName"
             android:textColor="@color/description"
             android:textSize="12dp" />
 
@@ -72,8 +72,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/thumbnail"
+            android:text="UserID"
             android:textColor="@color/colorAccent"
             android:textStyle="bold" />
+
 
     </RelativeLayout>
 
