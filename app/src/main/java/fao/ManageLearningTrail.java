@@ -4,6 +4,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 import model.LearningTrial;
 import java.util.ArrayList;
 
@@ -85,6 +87,8 @@ public class ManageLearningTrail {
 
             }
         });
+
+
         return learningTrials;
     }
 

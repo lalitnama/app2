@@ -1,4 +1,4 @@
-package trailblazelearn.nus.edu.sg.trailblazelearn;
+package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -31,6 +31,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import trailblazelearn.nus.edu.sg.trailblazelearn.R;
+import trailblazelearn.nus.edu.sg.trailblazelearn.activity.LearningTrailActivity;
+import trailblazelearn.nus.edu.sg.trailblazelearn.activity.ModuleListActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() !=null){
-                    Intent i = new Intent(MainActivity.this, ModuleListActivity.class);
+                    Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
                     startActivity(i);
                 }else{
 

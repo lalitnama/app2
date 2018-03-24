@@ -5,12 +5,12 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="trailblazelearn.nus.edu.sg.trailblazelearn.ModuleListActivity"
+    tools:context="trailblazelearn.nus.edu.sg.trailblazelearn.activity.LearningTrailActivity"
     >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/module_list"
-        android:name="trailblazelearn.nus.edu.sg.trailblazelearn.ModuleListFragment"
+        android:name="trailblazelearn.nus.edu.sg.trailblazelearn.fragment.LearningTrailDetailFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

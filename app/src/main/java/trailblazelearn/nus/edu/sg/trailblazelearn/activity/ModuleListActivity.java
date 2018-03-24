@@ -1,4 +1,5 @@
-package trailblazelearn.nus.edu.sg.trailblazelearn;
+package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,22 +23,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import trailblazelearn.nus.edu.sg.trailblazelearn.R;
+
+
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import trailblazelearn.nus.edu.sg.trailblazelearn.dummy.DummyContent;
+import trailblazelearn.nus.edu.sg.trailblazelearn.fragment.ModuleDetailFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * An activity representing a list of Modules. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link ModuleDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
 public class ModuleListActivity extends AppCompatActivity {
 
     /**
@@ -191,9 +188,9 @@ public class ModuleListActivity extends AppCompatActivity {
             ViewHolder(View view) {
                 super(view);
 
-                content = (TextView) view.findViewById(R.id.content);
-                details = (TextView) view.findViewById(R.id.details);
-                id = (TextView) view.findViewById(R.id.id);
+                content = (TextView) view.findViewById(R.id.learningtrailid);
+                details = (TextView) view.findViewById(R.id.learningtrailname);
+                id = (TextView) view.findViewById(R.id.userid);
                 thumbnail = view.findViewById(R.id.thumbnail);
                 viewBackground = view.findViewById(R.id.view_background);
                 viewForeground = view.findViewById(R.id.view_foreground);

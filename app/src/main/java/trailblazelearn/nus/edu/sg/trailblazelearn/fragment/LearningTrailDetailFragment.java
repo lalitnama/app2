@@ -1,4 +1,8 @@
-package trailblazelearn.nus.edu.sg.trailblazelearn;
+package trailblazelearn.nus.edu.sg.trailblazelearn.fragment;
+
+/**
+ * Created by Asif on 3/18/2018.
+ */
 
 import android.app.Activity;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -8,16 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 import trailblazelearn.nus.edu.sg.trailblazelearn.dummy.DummyContent;
 
-/**
- * A fragment representing a single Module detail screen.
- * This fragment is either contained in a {@link ModuleListActivity}
- * in two-pane mode (on tablets) or a {@link ModuleDetailActivity}
- * on handsets.
- */
-public class ModuleDetailFragment extends Fragment {
+public class LearningTrailDetailFragment extends Fragment {
+
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -33,8 +32,10 @@ public class ModuleDetailFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ModuleDetailFragment() {
+
+    public LearningTrailDetailFragment() {
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,4 +67,5 @@ public class ModuleDetailFragment extends Fragment {
 
         return rootView;
     }
+
 }

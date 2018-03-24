@@ -46,7 +46,7 @@
             android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/learningtrailid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/thumbnail"
@@ -57,17 +57,17 @@
             android:textSize="17dp" />
 
         <TextView
-            android:id="@+id/details"
+            android:id="@+id/learningtrailname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/content"
+            android:layout_below="@id/learningtrailid"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/thumbnail"
             android:textColor="@color/description"
             android:textSize="12dp" />
 
         <TextView
-            android:id="@+id/id"
+            android:id="@+id/userid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
