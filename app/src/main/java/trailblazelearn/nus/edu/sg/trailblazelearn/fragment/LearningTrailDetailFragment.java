@@ -5,14 +5,27 @@ package trailblazelearn.nus.edu.sg.trailblazelearn.fragment;
  */
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import adapter.LearningTrailAdapter;
+import fao.ManageLearningTrail;
 import model.LearningTrial;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 
@@ -23,7 +36,9 @@ public class LearningTrailDetailFragment extends Fragment {
      * represents.
      */
     public static final String LEARNING_TRAIL_ID = "learningtrailid";
-
+    public static final String LEARNING_TRAIL_NAME = "learningtrailid";
+    private LearningTrailAdapter mAdapter;
+    DatabaseReference db;
     /**
      * The dummy content this fragment is presenting.
      */
@@ -42,20 +57,6 @@ public class LearningTrailDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-        if (getArguments().containsKey(LEARNING_TRAIL_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = LearningTrial.g().getString(LEARNING_TRAIL_ID));
-
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle("Trail Details");
-            }
-        }
     }
 
     @Override

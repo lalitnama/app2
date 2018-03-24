@@ -20,6 +20,7 @@ import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 import trailblazelearn.nus.edu.sg.trailblazelearn.activity.LearningTrailActivity;
 import trailblazelearn.nus.edu.sg.trailblazelearn.activity.LearningTrailDetailActivity;
 import trailblazelearn.nus.edu.sg.trailblazelearn.fragment.LearningTrailDetailFragment;
+import util.ItemClickListener;
 
 /**
  * Created by Asif on 3/18/2018.
@@ -30,7 +31,7 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
     public LearningTrailActivity mParentActivity;
     public List<LearningTrial> mValues;
     public boolean mTwoPane;
-    public static final String LEARNING_TRAIL_ID = "learningtrailid";
+
 
 
     public LearningTrailAdapter(Context parent, List<LearningTrial> cartList) {
@@ -48,7 +49,15 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
         holder.thumbnail.setImageResource(R.drawable.ic_hdr_weak_black_18dp);
 
         holder.itemView.setTag(mValues.get(position));
-        holder.itemView.setOnClickListener(mOnClickListener);
+       // holder.itemView.setOnClickListener(mOnClickListener);
+
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(int pos) {
+                //OPEN DETAI ACTIVITY
+                openDetailActivity(mValues.get(pos).getLearningtrailid(),mValues.get(pos).getTrailname(),mValues.get(pos).getUserid());
+            }
+        });
 
     }
 
@@ -61,12 +70,12 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
         return new MyViewHolder(view);
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView learningtrailid,userid,trailname;
         public Date traildate;
         public ImageView thumbnail;
         public RelativeLayout viewBackground, viewForeground;
-
+        ItemClickListener itemClickListener;
         public MyViewHolder(View view) {
             super(view);
 
@@ -77,33 +86,32 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
             viewBackground = view.findViewById(R.id.view_background);
             viewForeground = view.findViewById(R.id.view_foreground);
 
+            itemView.setOnClickListener(this);
+        }
+        public void setItemClickListener(ItemClickListener itemClickListener)
+        {
+            this.itemClickListener=itemClickListener;
+        }
+
+        public void onClick(View view) {
+            this.itemClickListener.onItemClick(this.getLayoutPosition());
         }
     }
+
 
     @Override
     public int getItemCount() {
         return mValues.size();
     }
 
-    public  View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            LearningTrial item = (LearningTrial) view.getTag();
-            if (mTwoPane) {
-                Bundle arguments = new Bundle();
-                arguments.putString(LearningTrailDetailFragment.LEARNING_TRAIL_ID, item.getLearningtrailid());
-                LearningTrailDetailFragment fragment = new LearningTrailDetailFragment();
-                fragment.setArguments(arguments);
-                mParentActivity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.module_detail_container, fragment)
-                        .commit();
-            } else {
-                Context context = view.getContext();
-                Intent intent = new Intent(context, LearningTrailDetailActivity.class);
-                intent.putExtra(LearningTrailDetailFragment.LEARNING_TRAIL_ID, item.getLearningtrailid());
+    private void openDetailActivity(String...details)
+    {
+        Intent i=new Intent(context,LearningTrailDetailActivity.class);
 
-                context.startActivity(intent);
-            }
-        }
-    };
+        i.putExtra("LEARNING_TRAIL_ID",details[0]);
+        i.putExtra("LEARNING_TRAIL_NAME",details[1]);
+        i.putExtra("USER_ID",details[2]);
+
+        context.startActivity(i);
+    }
 }
