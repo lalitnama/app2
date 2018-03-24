@@ -42,4 +42,7 @@
     <string name="title_activity_learning_trail">LearningTrailActivity</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
+
+    <string name="facebook_app_id">2066670993599247</string>
+    <string name="fb_login_protocol_scheme">fb2066670993599247</string>
 </resources>
