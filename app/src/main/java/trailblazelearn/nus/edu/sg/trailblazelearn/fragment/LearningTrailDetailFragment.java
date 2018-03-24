@@ -12,8 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import model.LearningTrial;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
-import trailblazelearn.nus.edu.sg.trailblazelearn.dummy.DummyContent;
 
 public class LearningTrailDetailFragment extends Fragment {
 
@@ -21,12 +22,12 @@ public class LearningTrailDetailFragment extends Fragment {
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
-    public static final String ARG_ITEM_ID = "item_id";
+    public static final String LEARNING_TRAIL_ID = "learningtrailid";
 
     /**
      * The dummy content this fragment is presenting.
      */
-    private DummyContent.DummyItem mItem;
+    private LearningTrial mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -41,16 +42,18 @@ public class LearningTrailDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
+
+
+        if (getArguments().containsKey(LEARNING_TRAIL_ID)) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem = LearningTrial.g().getString(LEARNING_TRAIL_ID));
 
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
+                appBarLayout.setTitle("Trail Details");
             }
         }
     }
@@ -62,7 +65,7 @@ public class LearningTrailDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.module_detail)).setText(mItem.details);
+            ((TextView) rootView.findViewById(R.id.module_detail)).setText(mItem.getTrailname());
         }
 
         return rootView;

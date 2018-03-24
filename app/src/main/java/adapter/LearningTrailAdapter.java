@@ -19,7 +19,6 @@ import model.LearningTrial;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 import trailblazelearn.nus.edu.sg.trailblazelearn.activity.LearningTrailActivity;
 import trailblazelearn.nus.edu.sg.trailblazelearn.activity.LearningTrailDetailActivity;
-import trailblazelearn.nus.edu.sg.trailblazelearn.dummy.DummyContent;
 import trailblazelearn.nus.edu.sg.trailblazelearn.fragment.LearningTrailDetailFragment;
 
 /**
@@ -31,7 +30,7 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
     public LearningTrailActivity mParentActivity;
     public List<LearningTrial> mValues;
     public boolean mTwoPane;
-
+    public static final String LEARNING_TRAIL_ID = "learningtrailid";
 
 
     public LearningTrailAdapter(Context parent, List<LearningTrial> cartList) {
@@ -89,10 +88,10 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
     public  View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
+            LearningTrial item = (LearningTrial) view.getTag();
             if (mTwoPane) {
                 Bundle arguments = new Bundle();
-                arguments.putString(LearningTrailDetailFragment.ARG_ITEM_ID, item.id);
+                arguments.putString(LearningTrailDetailFragment.LEARNING_TRAIL_ID, item.getLearningtrailid());
                 LearningTrailDetailFragment fragment = new LearningTrailDetailFragment();
                 fragment.setArguments(arguments);
                 mParentActivity.getSupportFragmentManager().beginTransaction()
@@ -101,7 +100,7 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
             } else {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, LearningTrailDetailActivity.class);
-                intent.putExtra(LearningTrailDetailFragment.ARG_ITEM_ID, item.id);
+                intent.putExtra(LearningTrailDetailFragment.LEARNING_TRAIL_ID, item.getLearningtrailid());
 
                 context.startActivity(intent);
             }

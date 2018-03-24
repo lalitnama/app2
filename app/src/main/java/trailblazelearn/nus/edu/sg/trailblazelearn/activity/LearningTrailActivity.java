@@ -46,8 +46,6 @@ import adapter.LearningTrailAdapter;
 import fao.ManageLearningTrail;
 import model.LearningTrial;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
-import trailblazelearn.nus.edu.sg.trailblazelearn.dummy.DummyContent;
-import trailblazelearn.nus.edu.sg.trailblazelearn.fragment.LearningTrailDetailFragment;
 
 public class LearningTrailActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,6 +55,11 @@ public class LearningTrailActivity extends AppCompatActivity
     private LearningTrailAdapter mAdapter;
     DatabaseReference db;
     ManageLearningTrail trailhelper;
+
+    public static final String LEARNING_TRAIL_ID = "trailblazelearn.nus.edu.sg.trailblazelearn.learningtrailid";
+    public static final String USER_ID = "trailblazelearn.nus.edu.sg.trailblazelearn.userid";
+    public static final String TRAIL_NAME = "trailblazelearn.nus.edu.sg.trailblazelearn.trailname";
+
 
 
 
@@ -160,68 +163,6 @@ public class LearningTrailActivity extends AppCompatActivity
 
 
 
-    }
-
-    EditText trailName,trailID,userID;
-
-    //DISPLAY INPUT DIALOG
-    private void displayInputDialog()
-    {
-        Dialog d=new Dialog(this);
-        d.setTitle("Save To Firebase");
-        d.setContentView(R.layout.add_learningtrail_dailogue);
-
-        trailName= (EditText) d.findViewById(R.id.addTrailName);
-        trailID= (EditText) d.findViewById(R.id.addTrailID);
-        userID= (EditText) d.findViewById(R.id.addUserID);
-        Button saveBtn= (Button) d.findViewById(R.id.buttonAddtrail);
-        Button deleteBtn= (Button) d.findViewById(R.id.buttonDeleteTrail);
-
-        //SAVE
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //GET DATA
-                String tailname=trailName.getText().toString();
-                String trailid=trailID.getText().toString();
-                String userid=userID.getText().toString();
-                String id = db.push().getKey();
-                String username=userID.getText().toString();
-                Date c = Calendar.getInstance().getTime();
-                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                String formattedDate = df.format(c);
-
-                Long tsLong = System.currentTimeMillis()/1000;
-                String ts = tsLong.toString();
-
-                //SET DATA
-                LearningTrial s=new LearningTrial(trailid,userid,formattedDate,tailname,ts,tailname);
-
-
-
-                //SIMPLE VALIDATION
-                if(tailname != null && tailname.length()>0)
-                {
-                    //THEN SAVE
-                    if(trailhelper.save(s))
-                    {
-                        //IF SAVED CLEAR EDITXT
-
-                        mAdapter=new LearningTrailAdapter(LearningTrailActivity.this,trailhelper.retrieve());
-                        recyclerView.setAdapter(mAdapter);
-
-
-                    }
-                }else
-                {
-                    Toast.makeText(LearningTrailActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-        d.show();
     }
 
 
