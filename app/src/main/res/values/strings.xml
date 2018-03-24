@@ -4,6 +4,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="save">Save</string>
+    <string name="save_successful">Trail Added Successflly.</string>
     <string name="trail_name">Trail Name</string>
     <string name="hint_trail_name">Enter Trail Name</string>
     <string name="trail_id_name">TrailID</string>
