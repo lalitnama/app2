@@ -5,24 +5,49 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
+import adapter.LearningTrailAdapter;
+import fao.ManageLearningTrail;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
-import trailblazelearn.nus.edu.sg.trailblazelearn.fragment.LearningTrailDetailFragment;
 
 public class LearningTrailDetailActivity extends AppCompatActivity {
 
+    private LearningTrailAdapter mAdapter;
+    DatabaseReference db;
+    ManageLearningTrail trailhelper;
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener mAuthListener;
+
+    TextView nameTxt,descTxt, propTxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_module_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_learning_trail_layout);
+       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       // setSupportActionBar(toolbar);
+
+        nameTxt = (TextView) findViewById(R.id.nameDetailTxt);
+        descTxt= (TextView) findViewById(R.id.descDetailTxt);
+        propTxt = (TextView) findViewById(R.id.propellantDetailTxt);
+
+        //GET INTENT
+        Intent i=this.getIntent();
+
+        //RECEIVE DATA
+        String name=i.getExtras().getString("LEARNING_TRAIL_ID");
+        String desc=i.getExtras().getString("LEARNING_TRAIL_NAME");
+        String propellant=i.getExtras().getString("USER_ID");
+
+        //BIND DATA
+        nameTxt.setText(name);
+        descTxt.setText(desc);
+        propTxt.setText(propellant);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -33,49 +58,9 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
-        if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(LearningTrailDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(LearningTrailDetailFragment.ARG_ITEM_ID));
-            LearningTrailDetailFragment fragment = new LearningTrailDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.module_detail_container, fragment)
-                    .commit();
-        }
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. Use NavUtils to allow users
-            // to navigate up one level in the application structure. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
-            NavUtils.navigateUpTo(this, new Intent(this, LearningTrailActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }

@@ -9,6 +9,8 @@ import java.util.Date;
 
 public  class LearningTrial {
 
+
+
     String learningtrailid,userid,traildate,trailname,thumbnail,timestamp;
 
 
@@ -48,5 +50,31 @@ public  class LearningTrial {
 
     public String getThumbnail() {
         return thumbnail;
+    }
+
+
+
+    public void setLearningtrailid(String learningtrailid) {
+        this.learningtrailid = learningtrailid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public void setTraildate(String traildate) {
+        this.traildate = traildate;
+    }
+
+    public void setTrailname(String trailname) {
+        this.trailname = trailname;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -129,19 +130,6 @@ public class AddLearningTrailActivity extends AppCompatActivity {
 
 
 
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.addTrailDate:
-                datePickerDialog.show();
-                break;
-            case R.id.btn_save:
-                getLearningTrail();
-
-                break;
-
-        }
-    }
-
     private void getLearningTrail()
     {
         String tailname=trailName.getText().toString();
@@ -172,8 +160,13 @@ public class AddLearningTrailActivity extends AppCompatActivity {
             {
                 //IF SAVED CLEAR EDITXT
 
-                mAdapter=new LearningTrailAdapter(AddLearningTrailActivity.this,trailhelper.retrieve());
-                recyclerView.setAdapter(mAdapter);
+                Toast.makeText(AddLearningTrailActivity.this, getString(R.string.save_successful),
+                        Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(AddLearningTrailActivity.this, LearningTrailActivity.class);
+                startActivity(i);
+              //  mAdapter=new LearningTrailAdapter(this,trailhelper.retrieve());
+               // recyclerView.setAdapter(mAdapter);
 
 
             }
@@ -182,22 +175,6 @@ public class AddLearningTrailActivity extends AppCompatActivity {
             Toast.makeText(AddLearningTrailActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
         }
     }
-    public boolean onTouch(View v, MotionEvent event) {
-        final int actionPerformed = event.getAction();
 
-        switch(actionPerformed) {
-            case MotionEvent.ACTION_DOWN:
-                break;
-            case MotionEvent.ACTION_MOVE:
-                break;
-            case MotionEvent.ACTION_UP:
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-                break;
-        }
-        return false;
-    }
 
 }
