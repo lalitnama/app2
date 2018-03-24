@@ -44,7 +44,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 import trailblazelearn.nus.edu.sg.trailblazelearn.activity.LearningTrailActivity;
-import trailblazelearn.nus.edu.sg.trailblazelearn.activity.ModuleListActivity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
