@@ -1,7 +1,6 @@
 package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
 
 
-import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import adapter.TrailStationAdapter;
 import fao.ManageTrailStation;
-import model.TrailStation;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 
 public class LearningTrailDetailActivity extends AppCompatActivity {
@@ -123,9 +119,18 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();
-
+               Intent k = getIntent();
+                String trailidval=k.getExtras().getString("LEARNING_TRAIL_ID");
+                String trailname=k.getExtras().getString("LEARNING_TRAIL_NAME");
+                String userid=k.getExtras().getString("USER_ID");
 
                 Intent i = new Intent(LearningTrailDetailActivity.this, AddTrailStationActivity.class);
+
+
+                i.putExtra("LEARNING_TRAIL_ID",trailidval);
+                i.putExtra("LEARNING_TRAIL_NAME",trailname);
+                i.putExtra("USER_ID",userid);
+
                 startActivity(i);
                  //displayInputDialog();
 
@@ -145,66 +150,6 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
 
 
 
-    EditText trailStationName,sequenceID,instruction,geolocation;
-
-    //DISPLAY INPUT DIALOG
-    private void displayInputDialog()
-    {
-        Dialog d=new Dialog(this);
-        d.setTitle("Save To Firebase");
-        d.setContentView(R.layout.activity_add_trail_station);
-
-        trailStationName= (EditText) d.findViewById(R.id.addTrailStationName);
-        sequenceID= (EditText) d.findViewById(R.id.addTrailSequenceID);
-        instruction= (EditText) d.findViewById(R.id.addInstruction);
-        geolocation= (EditText) d.findViewById(R.id.addGeoLocation);
-        Button savetrailBtn= (Button) d.findViewById(R.id.btn_save);
-
-
-        //SAVE
-        savetrailBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //GET DATA
-                String tailstnname=trailStationName.getText().toString();
-                String seqid=sequenceID.getText().toString();
-                String instruc=instruction.getText().toString();
-                String id = db.push().getKey();
-                String geo=geolocation.getText().toString();
-                int seq = Integer.parseInt(seqid);
-
-                Intent j= getIntent();
-                String trailidval=j.getExtras().getString("LEARNING_TRAIL_ID");
-
-                //SET DATA
-                TrailStation s=new TrailStation(id,trailidval,geo,tailstnname,instruc,seq);
-
-
-
-                //SIMPLE VALIDATION
-                if(tailstnname != null && tailstnname.length()>0)
-                {
-                    //THEN SAVE
-                    if(trailstationhelper.trailstationsave(s))
-                    {
-                        //IF SAVED CLEAR EDITXT
-
-                        mstationAdapter=new TrailStationAdapter(LearningTrailDetailActivity.this,trailstationhelper.stationretrieve());
-                        stationrecyclerView.setAdapter(mstationAdapter);
-
-
-                    }
-                }else
-                {
-                    Toast.makeText(LearningTrailDetailActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-        d.show();
-    }
 
 
 

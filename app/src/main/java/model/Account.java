@@ -6,9 +6,9 @@ package model;
 
 public class Account {
 
-    int userid;
+    String userid;
 
-    public int getUserid() {
+    public String getUserid() {
         return userid;
     }
 
@@ -32,7 +32,7 @@ public class Account {
         return accountstatus;
     }
 
-    public Account(int userid, String firstname, String lastname, String emailaddress, String accounttype, boolean accountstatus) {
+    public Account(String userid, String firstname, String lastname, String emailaddress, String accounttype, boolean accountstatus) {
 
         this.userid = userid;
         this.firstname = firstname;

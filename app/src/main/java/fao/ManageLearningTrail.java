@@ -4,10 +4,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import model.LearningTrial;
-import java.util.ArrayList;
 
 /**
  * Created by Asif on 3/17/2018.
