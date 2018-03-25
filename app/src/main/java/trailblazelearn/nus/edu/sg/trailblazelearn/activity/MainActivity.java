@@ -104,19 +104,20 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 FirebaseUser username=firebaseAuth.getCurrentUser();
-                                boolean val = checkuserexist(email, dataSnapshot);
-                                if (val == false) {
-
+                                //if(dataSnapshot.hasChild(email)) {
+                                   // Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
+                                  //  startActivity(i);
+                                //}else{
                                     String str = username.getDisplayName();
                                     String[] splitStr = str.split("\\s+");
                                     String accounttype = "Google";
-                                    addUser(splitStr[0], splitStr[1], email, accounttype);
+                                    //addUser(splitStr[0], splitStr[1], email, accounttype);
+                                //}
 
-                                } else {
-
-                                    Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
-                                    startActivity(i);
-                                }
+                              //  boolean val = checkuserexist(email, dataSnapshot);
+                                //if (val == false) {
+                                //} else {
+                                //}
 
                             }
 
@@ -247,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                             //Remove after implementing check with db
-                            Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
+                           Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
                             startActivity(i);
 
 

@@ -105,7 +105,7 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
 
 
         //INITIALIZE FIREBASE DB
-        db= FirebaseDatabase.getInstance().getReference("TrailStation");
+        db= FirebaseDatabase.getInstance().getReference("TrailStation").child(i.getExtras().getString("LEARNING_TRAIL_ID"));
         trailstationhelper=new ManageTrailStation(db);
 
         //ADAPTER

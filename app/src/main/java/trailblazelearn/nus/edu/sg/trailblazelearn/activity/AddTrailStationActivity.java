@@ -55,9 +55,9 @@ public class AddTrailStationActivity extends AppCompatActivity {
 
             }
         };
+        Intent i= getIntent();
 
-
-        db= FirebaseDatabase.getInstance().getReference("TrailStation");
+        db=  FirebaseDatabase.getInstance().getReference("TrailStation").child(i.getExtras().getString("LEARNING_TRAIL_ID"));
         trailstationhelper=new ManageTrailStation(db);
 
         saveBtn1.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +82,8 @@ public class AddTrailStationActivity extends AppCompatActivity {
 
         Intent j= getIntent();
         String trailidval=j.getExtras().getString("LEARNING_TRAIL_ID");
+        String trailname=j.getExtras().getString("LEARNING_TRAIL_NAME");
+        String userid=j.getExtras().getString("USER_ID");
 
         //SET DATA
         TrailStation s=new TrailStation(id,trailidval,geo,tailstnname,instruc,seq);
@@ -101,6 +103,9 @@ public class AddTrailStationActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(AddTrailStationActivity.this, LearningTrailDetailActivity.class);
+                i.putExtra("LEARNING_TRAIL_ID",trailidval);
+                i.putExtra("LEARNING_TRAIL_NAME",trailname);
+                i.putExtra("USER_ID",userid);
                 startActivity(i);
                 //  mAdapter=new LearningTrailAdapter(this,trailhelper.retrieve());
                 // recyclerView.setAdapter(mAdapter);
