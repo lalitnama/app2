@@ -1,30 +1,68 @@
 package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
 
 
+import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import adapter.LearningTrailAdapter;
-import fao.ManageLearningTrail;
+import adapter.TrailStationAdapter;
+import fao.ManageTrailStation;
+import model.TrailStation;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 
 public class LearningTrailDetailActivity extends AppCompatActivity {
 
-    private LearningTrailAdapter mAdapter;
+    private TrailStationAdapter mstationAdapter;
     DatabaseReference db;
-    ManageLearningTrail trailhelper;
+    ManageTrailStation trailstationhelper;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
-
+    private RecyclerView stationrecyclerView;
+    private  LearningTrailDetailActivity mPActivity;
+    private Fragment fags;
     TextView nameTxt,descTxt, propTxt;
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mstationAdapter=new TrailStationAdapter(LearningTrailDetailActivity.this,trailstationhelper.stationretrieve());
+                stationrecyclerView.setAdapter(mstationAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,18 +87,125 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
         descTxt.setText(desc);
         propTxt.setText(propellant);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener=new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() ==null){
+                    Intent i = new Intent(LearningTrailDetailActivity.this, MainActivity.class);
+                    startActivity(i);
+                }else{
+
+                }
+
+            }
+        };
+
+
+        stationrecyclerView = findViewById(R.id.trail_station_list);
+        stationrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        //INITIALIZE FIREBASE DB
+        db= FirebaseDatabase.getInstance().getReference("TrailStation");
+        trailstationhelper=new ManageTrailStation(db);
+
+        //ADAPTER
+
+        mstationAdapter=new TrailStationAdapter(this,trailstationhelper.stationretrieve());
+        stationrecyclerView.setAdapter(mstationAdapter);
+
+        Button saveBtn= (Button) findViewById(R.id.add_trail_station_click);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //.setAction("Action", null).show();
+
+
+                Intent i = new Intent(LearningTrailDetailActivity.this, AddTrailStationActivity.class);
+                startActivity(i);
+                 //displayInputDialog();
+
+                //Intent k= getIntent();
+               // String trailidval=k.getExtras().getString("LEARNING_TRAIL_ID");
+                //String useridval=k.getExtras().getString("USER_ID");
+                //Toast.makeText(LearningTrailDetailActivity.this, "oclick", Toast.LENGTH_SHORT).show();
+
+
+
+
             }
         });
 
-
-
     }
+
+
+
+
+    EditText trailStationName,sequenceID,instruction,geolocation;
+
+    //DISPLAY INPUT DIALOG
+    private void displayInputDialog()
+    {
+        Dialog d=new Dialog(this);
+        d.setTitle("Save To Firebase");
+        d.setContentView(R.layout.activity_add_trail_station);
+
+        trailStationName= (EditText) d.findViewById(R.id.addTrailStationName);
+        sequenceID= (EditText) d.findViewById(R.id.addTrailSequenceID);
+        instruction= (EditText) d.findViewById(R.id.addInstruction);
+        geolocation= (EditText) d.findViewById(R.id.addGeoLocation);
+        Button savetrailBtn= (Button) d.findViewById(R.id.btn_save);
+
+
+        //SAVE
+        savetrailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //GET DATA
+                String tailstnname=trailStationName.getText().toString();
+                String seqid=sequenceID.getText().toString();
+                String instruc=instruction.getText().toString();
+                String id = db.push().getKey();
+                String geo=geolocation.getText().toString();
+                int seq = Integer.parseInt(seqid);
+
+                Intent j= getIntent();
+                String trailidval=j.getExtras().getString("LEARNING_TRAIL_ID");
+
+                //SET DATA
+                TrailStation s=new TrailStation(id,trailidval,geo,tailstnname,instruc,seq);
+
+
+
+                //SIMPLE VALIDATION
+                if(tailstnname != null && tailstnname.length()>0)
+                {
+                    //THEN SAVE
+                    if(trailstationhelper.trailstationsave(s))
+                    {
+                        //IF SAVED CLEAR EDITXT
+
+                        mstationAdapter=new TrailStationAdapter(LearningTrailDetailActivity.this,trailstationhelper.stationretrieve());
+                        stationrecyclerView.setAdapter(mstationAdapter);
+
+
+                    }
+                }else
+                {
+                    Toast.makeText(LearningTrailDetailActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        d.show();
+    }
+
 
 
 }
