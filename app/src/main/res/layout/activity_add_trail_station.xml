@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="trailblazelearn.nus.edu.sg.trailblazelearn.activity.AddTrailStationActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            >
+
+            <TextView
+                android:id="@+id/textTrailStationName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TrailStation Name"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:paddingLeft="4dp"
+                />
+            <EditText
+                android:id="@+id/addTrailStationName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_below="@id/textTrailStationName"
+                android:hint="Enter TrailStation Name"
+                />
+
+            <TextView
+                android:id="@+id/text_trail_sequence_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SequenceID"
+                android:layout_below="@id/addTrailStationName"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:paddingLeft="4dp"
+                />
+            <EditText
+                android:id="@+id/addTrailSequenceID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:hint="Enter SequenceID"
+                android:layout_below="@id/text_trail_sequence_id"
+                />
+
+            <TextView
+                android:id="@+id/text_instruction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Instruction"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_below="@id/addTrailSequenceID"
+                android:paddingLeft="4dp"
+                />
+            <EditText
+                android:id="@+id/addInstruction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_below="@id/text_instruction"
+                android:hint="Enter Instruction"
+                />
+
+            <TextView
+                android:id="@+id/text_geolocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Geo Location"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_below="@id/addInstruction"
+                android:paddingLeft="4dp"
+                />
+            <EditText
+                android:id="@+id/addGeoLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_below="@id/text_geolocation"
+                android:singleLine="true"
+                android:hint="Enter Geo Location"
+                />
+            <Button
+                android:id="@+id/btn_tail_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="20dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/save"
+                android:layout_below="@id/addGeoLocation"
+                android:textColor="@android:color/white"
+                />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
