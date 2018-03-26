@@ -44,7 +44,7 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mstationAdapter=new TrailStationAdapter(LearningTrailDetailActivity.this,trailstationhelper.stationretrieve());
+                mstationAdapter=new TrailStationAdapter(LearningTrailDetailActivity.this,trailstationhelper.stationretrieve(), null);
                 stationrecyclerView.setAdapter(mstationAdapter);
             }
 
@@ -110,7 +110,7 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
 
         //ADAPTER
 
-        mstationAdapter=new TrailStationAdapter(this,trailstationhelper.stationretrieve());
+        mstationAdapter=new TrailStationAdapter(this,trailstationhelper.stationretrieve(), null);
         stationrecyclerView.setAdapter(mstationAdapter);
 
         Button saveBtn= (Button) findViewById(R.id.add_trail_station_click);

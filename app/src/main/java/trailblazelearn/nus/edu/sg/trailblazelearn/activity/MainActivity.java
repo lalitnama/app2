@@ -47,23 +47,20 @@ import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Spinner training_mod, spinner2;
-    SignInButton Button;
-    DatabaseReference db;
-    FirebaseAuth mAuth;
+    private final static int RC_SIGN_IN = 2;
+    private DatabaseReference db;
+    private FirebaseAuth mAuth;
+    private List<Account> accounts;
+    private List<String> emailval;
+    private GoogleApiClient mGoogleApiClient;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private Spinner loginMode;
     private CallbackManager mCallbackManager;
-    List<Account> accounts;
-    List<String> emailval;
-
-
-    private final static int RC_SIGN_IN=2;
-     GoogleApiClient mGoogleApiClient;
-    FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onStart() {
         super.onStart();
-      //  mAuth.addAuthStateListener(mAuthListener);
+        //  mAuth.addAuthStateListener(mAuthListener);
 
     }
 
@@ -73,14 +70,13 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
-        training_mod = (Spinner) findViewById(R.id.trainingmode);
-        SignInButton signInButton = findViewById(R.id.sign_in_button);
-
-        signInButton.setOnClickListener(new OnClickListener() {
+        loginMode = (Spinner) findViewById(R.id.trainingmode);
+        SignInButton googleSignInBtn = findViewById(R.id.sign_in_button);
+        googleSignInBtn.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-               signIn();
+                signIn();
 
             }
         });
@@ -88,58 +84,55 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         initializeFB();
 
-        mAuthListener=new FirebaseAuth.AuthStateListener() {
+
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() !=null){
-                   FirebaseUser user=firebaseAuth.getCurrentUser();
-                           // addUser(splitStr[0], splitStr[1], email, accounttype);
+                if (firebaseAuth.getCurrentUser() != null) {
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    // addUser(splitStr[0], splitStr[1], email, accounttype);
 
                     //Toast.makeText(MainActivity.this,splitStr[1] , Toast.LENGTH_SHORT).show();
 
 
-                        final String email = user.getEmail();
+                    final String email = user.getEmail();
 
-                        db.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                FirebaseUser username=firebaseAuth.getCurrentUser();
-                                //if(dataSnapshot.hasChild(email)) {
-                                   // Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
-                                  //  startActivity(i);
-                                //}else{
-                                    String str = username.getDisplayName();
-                                    String[] splitStr = str.split("\\s+");
-                                    String accounttype = "Google";
-                                    //addUser(splitStr[0], splitStr[1], email, accounttype);
-                                //}
+                    db.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            FirebaseUser username = firebaseAuth.getCurrentUser();
+                            //if(dataSnapshot.hasChild(email)) {
+                            // Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
+                            //  startActivity(i);
+                            //}else{
+                            String str = username.getDisplayName();
+                            String[] splitStr = str.split("\\s+");
+                            String accounttype = "Google";
+                            //addUser(splitStr[0], splitStr[1], email, accounttype);
+                            //}
 
-                              //  boolean val = checkuserexist(email, dataSnapshot);
-                                //if (val == false) {
-                                //} else {
-                                //}
+                            //  boolean val = checkuserexist(email, dataSnapshot);
+                            //if (val == false) {
+                            //} else {
+                            //}
 
-                            }
+                        }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                            }
-                        });
-
-
+                        }
+                    });
 
 
-                }else{
-
+                } else {
 
 
                 }
 
             }
         };
-
-
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -156,16 +149,16 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                             }
                         })
-                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
 
     private void initializeFB() {
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
-        LoginButton loginButton = findViewById(R.id.button_facebook_login);
-        loginButton.setReadPermissions("email", "public_profile");
-        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        LoginButton fbLoginButton = findViewById(R.id.button_facebook_login);
+        fbLoginButton.setReadPermissions("email", "public_profile");
+        fbLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 handleFacebookAccessToken(loginResult.getAccessToken());
@@ -193,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
+                            moveToNextActivity();
                             Toast.makeText(MainActivity.this, user.getDisplayName(), Toast.LENGTH_SHORT).show();
                             //updateUI(user);
                         } else {
@@ -204,6 +198,16 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    private void moveToNextActivity() {
+        Intent i = null;
+        if(loginMode.getSelectedItem().equals("Trainers")){
+            i = new Intent(MainActivity.this, LearningTrailActivity.class);
+        }else{
+            i = new Intent(MainActivity.this, ParticipantActivity.class);
+        }
+        startActivity(i);
+    }
+
     public void signOut() {
         mAuth.signOut();
         LoginManager.getInstance().logOut();
@@ -213,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     // Configure Google Sign In
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -222,14 +227,14 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
-            GoogleSignInResult result=Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if(result.isSuccess()) {
-                    GoogleSignInAccount account=result.getSignInAccount();
-                    firebaseAuthWithGoogle(account);
-            }else{
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result.isSuccess()) {
+                GoogleSignInAccount account = result.getSignInAccount();
+                firebaseAuthWithGoogle(account);
+            } else {
                 Toast.makeText(MainActivity.this, "Auth went wrong", Toast.LENGTH_SHORT).show();
             }
-        }else {
+        } else {
             mCallbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -245,20 +250,14 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-
-
-                            //Remove after implementing check with db
-                           Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
-                            startActivity(i);
-
-
+                            moveToNextActivity();
                             Toast.makeText(MainActivity.this, user.getDisplayName(), Toast.LENGTH_SHORT).show();
-                           // updateUI(user);
+                            // updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Auth went wrong", Toast.LENGTH_SHORT).show();
-                          //  updateUI(null);
+                            //  updateUI(null);
                         }
 
                         // ...
@@ -267,24 +266,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private boolean checkuserexist(String email, DataSnapshot dataSnapshot){
+    private boolean checkuserexist(String email, DataSnapshot dataSnapshot) {
 
-        for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+        for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
             String name = (String) messageSnapshot.child("emailaddress").getValue();
             String message = (String) messageSnapshot.child("firstname").getValue();
 
-            if(name==email){
+            if (name == email) {
                 return true;
             }
             // emailval.add(name);
         }
 
 
-        return  false;
+        return false;
     }
 
 
-    private void  addUser(String firstname,String lastname,String email,String accounttype) {
+    private void addUser(String firstname, String lastname, String email, String accounttype) {
         //checking if the value is provided
         if (!TextUtils.isEmpty(email)) {
 
@@ -293,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
             String id = db.push().getKey();
 
             //creating an Artist Object
-            Account account = new Account(id, firstname, lastname,email,accounttype,true);
+            Account account = new Account(id, firstname, lastname, email, accounttype, true);
 
             //Saving the Artist
             db.child(id).setValue(account);
@@ -303,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "User not able to register", Toast.LENGTH_LONG).show();
         }
     }
-
 
 
 }

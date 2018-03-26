@@ -25,9 +25,10 @@ public class TrailStationAdapter extends RecyclerView.Adapter<TrailStationAdapte
     public Context tailstationcontext;
     public LearningTrailDetailActivity mParentActivity;
     public List<TrailStation> mTrailstationValues;
+    private  ItemClickListener itemClickListener;
 
-
-    public TrailStationAdapter(Context parent, List<TrailStation> stationList) {
+    public TrailStationAdapter(Context parent, List<TrailStation> stationList, ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
         this.tailstationcontext = parent;
         this.mTrailstationValues = stationList;
     }
@@ -40,6 +41,7 @@ public class TrailStationAdapter extends RecyclerView.Adapter<TrailStationAdapte
         holder.thumbnail.setImageResource(R.drawable.ic_add_circle_black_24dp);
 
         holder.itemView.setTag(mTrailstationValues.get(position));
+        holder.setPosition(position);
     }
 
     @Override
@@ -48,12 +50,11 @@ public class TrailStationAdapter extends RecyclerView.Adapter<TrailStationAdapte
                 .inflate(R.layout.trail_station_list_data, parent, false);
         return new TrailStationViewHolder(view);
     }
-    public class TrailStationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class TrailStationViewHolder extends RecyclerView.ViewHolder {
         public TextView trailstationid,learningtrailid,stationname,instruction;
         public ImageView thumbnail;
         public RelativeLayout trail_view_background, trail_view_foreground;
-
-        ItemClickListener itemClickListener;
+        int position;
 
         public TrailStationViewHolder(View view) {
             super(view);
@@ -63,28 +64,27 @@ public class TrailStationAdapter extends RecyclerView.Adapter<TrailStationAdapte
             instruction = (TextView) view.findViewById(R.id.instruction);
             thumbnail = view.findViewById(R.id.thumbnail);
             trail_view_foreground = view.findViewById(R.id.trail_view_foreground);
-
             trail_view_background = view.findViewById(R.id.trail_view_background);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(itemClickListener != null)
+                        itemClickListener.onItemClick(position);
+                }
+            });
+        }
 
-            itemView.setOnClickListener(this);
+        public void setPosition(int position) {
+            this.position = position;
         }
-        public void setItemClickListener(ItemClickListener itemClickListener)
-        {
-            this.itemClickListener=itemClickListener;
-        }
+    }
 
-        public void onClick(View view) {
-            this.itemClickListener.onItemClick(this.getLayoutPosition());
-        }
+    public TrailStation getItemForPosition(int position){
+        return mTrailstationValues.get(position);
     }
 
     public int getItemCount() {
         return mTrailstationValues.size();
     }
-
-
-
-
-
 
 }
