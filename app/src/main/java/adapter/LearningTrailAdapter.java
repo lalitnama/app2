@@ -1,9 +1,7 @@
 package adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import model.LearningTrial;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 import trailblazelearn.nus.edu.sg.trailblazelearn.activity.LearningTrailActivity;
 import trailblazelearn.nus.edu.sg.trailblazelearn.activity.LearningTrailDetailActivity;
-import trailblazelearn.nus.edu.sg.trailblazelearn.fragment.LearningTrailDetailFragment;
 import util.ItemClickListener;
 
 /**
@@ -49,7 +46,7 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
         holder.thumbnail.setImageResource(R.drawable.ic_hdr_weak_black_18dp);
 
         holder.itemView.setTag(mValues.get(position));
-       // holder.itemView.setOnClickListener(mOnClickListener);
+        //holder.itemView.setOnClickListener(mOnClickListener);
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
