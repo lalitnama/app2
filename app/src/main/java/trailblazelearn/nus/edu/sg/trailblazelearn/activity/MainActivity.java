@@ -1,21 +1,15 @@
 package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import java.util.ArrayList;
-import java.util.List;
-import android.app.Activity;
-import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.content.Intent;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -25,7 +19,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -41,23 +34,26 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
+
+import model.Account;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
-import trailblazelearn.nus.edu.sg.trailblazelearn.activity.LearningTrailActivity;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import android.util.Base64;
-import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
     private Spinner training_mod, spinner2;
     SignInButton Button;
+    DatabaseReference db;
     FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
+    List<Account> accounts;
+    List<String> emailval;
 
 
     private final static int RC_SIGN_IN=2;
@@ -67,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+      //  mAuth.addAuthStateListener(mAuthListener);
+
     }
 
     @Override
@@ -87,17 +84,55 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        db = FirebaseDatabase.getInstance().getReference("Account");
         mAuth = FirebaseAuth.getInstance();
         initializeFB();
 
         mAuthListener=new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() !=null){
-                    Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
-                    startActivity(i);
+                   FirebaseUser user=firebaseAuth.getCurrentUser();
+                           // addUser(splitStr[0], splitStr[1], email, accounttype);
+
+                    //Toast.makeText(MainActivity.this,splitStr[1] , Toast.LENGTH_SHORT).show();
+
+
+                        final String email = user.getEmail();
+
+                        db.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                FirebaseUser username=firebaseAuth.getCurrentUser();
+                                //if(dataSnapshot.hasChild(email)) {
+                                   // Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
+                                  //  startActivity(i);
+                                //}else{
+                                    String str = username.getDisplayName();
+                                    String[] splitStr = str.split("\\s+");
+                                    String accounttype = "Google";
+                                    //addUser(splitStr[0], splitStr[1], email, accounttype);
+                                //}
+
+                              //  boolean val = checkuserexist(email, dataSnapshot);
+                                //if (val == false) {
+                                //} else {
+                                //}
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+
                 }else{
+
+
 
                 }
 
@@ -210,6 +245,13 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+
+                            //Remove after implementing check with db
+                           Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
+                            startActivity(i);
+
+
                             Toast.makeText(MainActivity.this, user.getDisplayName(), Toast.LENGTH_SHORT).show();
                            // updateUI(user);
                         } else {
@@ -223,5 +265,45 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
+    private boolean checkuserexist(String email, DataSnapshot dataSnapshot){
+
+        for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+            String name = (String) messageSnapshot.child("emailaddress").getValue();
+            String message = (String) messageSnapshot.child("firstname").getValue();
+
+            if(name==email){
+                return true;
+            }
+            // emailval.add(name);
+        }
+
+
+        return  false;
+    }
+
+
+    private void  addUser(String firstname,String lastname,String email,String accounttype) {
+        //checking if the value is provided
+        if (!TextUtils.isEmpty(email)) {
+
+            //getting a unique id using push().getKey() method
+            //it will create a unique id and we will use it as the Primary Key for our Artist
+            String id = db.push().getKey();
+
+            //creating an Artist Object
+            Account account = new Account(id, firstname, lastname,email,accounttype,true);
+
+            //Saving the Artist
+            db.child(id).setValue(account);
+
+        } else {
+            //if the value is not given displaying a toast
+            Toast.makeText(this, "User not able to register", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 
 }
