@@ -3,6 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="trailblazelearn.nus.edu.sg.trailblazelearn.ModuleListActivity">
     <item
+        android:id="@+id/action_trainer"
+        android:orderInCategory="100"
+        android:title="Trainer"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_participant"
+        android:orderInCategory="100"
+        android:title="Participant"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

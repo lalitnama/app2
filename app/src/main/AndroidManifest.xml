@@ -57,9 +57,11 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.AddTrailStationActivity"
-            android:parentActivityName=".activity.LearningTrailDetailActivity">
-        </activity>
+        <activity
+            android:name=".activity.AddTrailStationActivity"
+            android:parentActivityName=".activity.LearningTrailDetailActivity" />
+        <activity android:name=".activity.TrailStationActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

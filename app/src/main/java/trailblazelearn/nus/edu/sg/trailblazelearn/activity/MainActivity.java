@@ -44,9 +44,11 @@ import java.util.List;
 
 import model.Account;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
+import util.Session;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String USER_ID = "trailblazelearn.nus.edu.sg.trailblazelearn.userid";
     private Spinner training_mod, spinner2;
     SignInButton Button;
     DatabaseReference db;
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     List<Account> accounts;
     List<String> emailval;
+    private Session session;//global variable
+
 
 
     private final static int RC_SIGN_IN=2;
@@ -75,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
         training_mod = (Spinner) findViewById(R.id.trainingmode);
         SignInButton signInButton = findViewById(R.id.sign_in_button);
+
+        // Session Manager
+        session = new Session(getApplicationContext());
 
         signInButton.setOnClickListener(new OnClickListener() {
 
@@ -246,9 +253,12 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
+                            String useridval=user.getUid();
+                            String usernamval=user.getDisplayName();
 
+                            session.createLoginSession(usernamval, useridval);
                             //Remove after implementing check with db
-                           Intent i = new Intent(MainActivity.this, LearningTrailActivity.class);
+                           Intent i = new Intent(getApplicationContext(), LearningTrailActivity.class);
                             startActivity(i);
 
 

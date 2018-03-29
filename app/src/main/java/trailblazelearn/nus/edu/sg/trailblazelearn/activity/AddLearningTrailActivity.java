@@ -102,8 +102,10 @@ public class AddLearningTrailActivity extends AppCompatActivity {
         };
 
 
+        Intent m =getIntent();
+         String useridnew=m.getExtras().getString("USER_ID");
         //INITIALIZE FIREBASE DB
-        db= FirebaseDatabase.getInstance().getReference("LearningTrail");
+        db= FirebaseDatabase.getInstance().getReference("LearningTrail").child(useridnew);
         trailhelper=new ManageLearningTrail(db);
 
 
@@ -142,7 +144,6 @@ public class AddLearningTrailActivity extends AppCompatActivity {
 
         //SET DATA
         LearningTrial s=new LearningTrial(trailid,userid,formattedDate,tailname,ts,tailname);
-
 
 
         //SIMPLE VALIDATION

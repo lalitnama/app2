@@ -76,7 +76,7 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
         //RECEIVE DATA
         String name=i.getExtras().getString("LEARNING_TRAIL_ID");
         String desc=i.getExtras().getString("LEARNING_TRAIL_NAME");
-        String propellant=i.getExtras().getString("USER_ID");
+        String propellant=i.getExtras().getString("LEARNING_TRAIL_NAME");
 
         //BIND DATA
         nameTxt.setText(name);
@@ -119,17 +119,16 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();
-               Intent k = getIntent();
+
+                Intent k = getIntent();
                 String trailidval=k.getExtras().getString("LEARNING_TRAIL_ID");
                 String trailname=k.getExtras().getString("LEARNING_TRAIL_NAME");
-                String userid=k.getExtras().getString("USER_ID");
 
                 Intent i = new Intent(LearningTrailDetailActivity.this, AddTrailStationActivity.class);
 
 
                 i.putExtra("LEARNING_TRAIL_ID",trailidval);
                 i.putExtra("LEARNING_TRAIL_NAME",trailname);
-                i.putExtra("USER_ID",userid);
 
                 startActivity(i);
                  //displayInputDialog();
@@ -146,6 +145,7 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
         });
 
     }
+
 
 
 

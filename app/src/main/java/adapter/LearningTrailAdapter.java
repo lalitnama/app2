@@ -31,6 +31,10 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
 
 
 
+    public static final String LEARNING_TRAIL_ID = "trailblazelearn.nus.edu.sg.trailblazelearn.learningtrailid";
+    public static final String TRAIL_NAME = "trailblazelearn.nus.edu.sg.trailblazelearn.trailname";
+
+
     public LearningTrailAdapter(Context parent, List<LearningTrial> cartList) {
         this.context = parent;
         this.mValues = cartList;
@@ -103,12 +107,12 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
 
     private void openDetailActivity(String...details)
     {
+
+
         Intent i=new Intent(context,LearningTrailDetailActivity.class);
 
         i.putExtra("LEARNING_TRAIL_ID",details[0]);
         i.putExtra("LEARNING_TRAIL_NAME",details[1]);
-        i.putExtra("USER_ID",details[2]);
-
         context.startActivity(i);
     }
 }
