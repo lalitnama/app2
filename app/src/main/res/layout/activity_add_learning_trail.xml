@@ -52,47 +52,6 @@
                 android:hint="@string/hint_trail_name"
                 />
 
-            <TextView
-                android:id="@+id/text_trail_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/trail_id_name"
-                android:layout_below="@id/addTrailName"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:paddingLeft="4dp"
-                />
-            <EditText
-                android:id="@+id/addTrailID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:hint="@string/hint_trail_id_name"
-                android:layout_below="@id/text_trail_id"
-                />
-
-            <TextView
-                android:id="@+id/text_user_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/user_name"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_below="@id/addTrailID"
-                android:paddingLeft="4dp"
-                />
-            <EditText
-                android:id="@+id/addUserID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_below="@id/text_user_name"
-                android:hint="@string/user_name_hint"
-                />
 
             <TextView
                 android:id="@+id/text_date"
@@ -102,7 +61,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_below="@id/addUserID"
+                android:layout_below="@id/addTrailName"
                 android:paddingLeft="4dp"
                 />
             <EditText

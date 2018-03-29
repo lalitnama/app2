@@ -46,7 +46,7 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
 
         holder.learningtrailid.setText(mValues.get(position).getLearningtrailid());
         holder.trailname.setText(mValues.get(position).getTrailname());
-        holder.userid.setText(mValues.get(position).getUserid());
+       // holder.userid.setText(mValues.get(position).getUserid());
         holder.thumbnail.setImageResource(R.drawable.ic_hdr_weak_black_18dp);
 
         holder.itemView.setTag(mValues.get(position));
@@ -82,7 +82,7 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
 
             learningtrailid = (TextView) view.findViewById(R.id.learningtrailid);
             trailname = (TextView) view.findViewById(R.id.learningtrailname);
-            userid = (TextView) view.findViewById(R.id.userid);
+           // userid = (TextView) view.findViewById(R.id.userid);
             thumbnail = view.findViewById(R.id.thumbnail);
             viewBackground = view.findViewById(R.id.view_background);
             viewForeground = view.findViewById(R.id.view_foreground);
@@ -113,6 +113,7 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
 
         i.putExtra("LEARNING_TRAIL_ID",details[0]);
         i.putExtra("LEARNING_TRAIL_NAME",details[1]);
+        i.putExtra("USER_ID",details[2]);
         context.startActivity(i);
     }
 }

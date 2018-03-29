@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
+                            moveToNextActivity();
                             Toast.makeText(MainActivity.this, user.getDisplayName(), Toast.LENGTH_SHORT).show();
                             //updateUI(user);
                         } else {
@@ -211,6 +212,16 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+
+    private void moveToNextActivity() {
+        Intent i = null;
+        if(training_mod.getSelectedItem().equals("Trainers")){
+            i = new Intent(MainActivity.this, LearningTrailActivity.class);
+        }else{
+            i = new Intent(MainActivity.this, TrailStationActivity.class);
+        }
+        startActivity(i);
+    }
     public void signOut() {
         mAuth.signOut();
         LoginManager.getInstance().logOut();
@@ -258,9 +269,9 @@ public class MainActivity extends AppCompatActivity {
 
                             session.createLoginSession(usernamval, useridval);
                             //Remove after implementing check with db
-                           Intent i = new Intent(getApplicationContext(), LearningTrailActivity.class);
-                            startActivity(i);
-
+                          // Intent i = new Intent(getApplicationContext(), LearningTrailActivity.class);
+                           // startActivity(i);
+                            moveToNextActivity();
 
                             Toast.makeText(MainActivity.this, user.getDisplayName(), Toast.LENGTH_SHORT).show();
                            // updateUI(user);

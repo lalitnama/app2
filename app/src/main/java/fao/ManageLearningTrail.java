@@ -18,6 +18,8 @@ public class ManageLearningTrail {
     Boolean saved=null;
     ArrayList<LearningTrial> learningTrials=new ArrayList<>();
 
+    private String userId;
+
 
     public ManageLearningTrail(DatabaseReference db) {
         this.db = db;
@@ -33,7 +35,7 @@ public class ManageLearningTrail {
         {
             try
             {
-                db.child("LearningTrial").push().setValue(learningTrial);
+                db.push().setValue(learningTrial);
                 saved=true;
 
             }catch (DatabaseException e)
@@ -53,8 +55,11 @@ public class ManageLearningTrail {
 
         for (DataSnapshot ds : dataSnapshot.getChildren())
         {
-            LearningTrial learningTrial=ds.getValue(LearningTrial.class);
-            learningTrials.add(learningTrial);
+            String uId = String.valueOf(ds.child("userid").getValue());
+            if(userId != null && uId.equals(userId)) {
+                LearningTrial learningTrial = ds.getValue(LearningTrial.class);
+                learningTrials.add(learningTrial);
+            }
         }
     }
 
@@ -90,6 +95,28 @@ public class ManageLearningTrail {
 
 
         return learningTrials;
+    }
+
+    public boolean remove(int position){
+        LearningTrial lt = learningTrials.get(position);
+        db.child(lt.getLearningtrailid()).setValue(null);
+        return true;
+    }
+
+    public String getTrailId(int position){
+        LearningTrial lt = learningTrials.get(position);
+        return lt.getLearningtrailid();
+    }
+
+    //READ THEN RETURN ARRAYLIST
+    public LearningTrial retrieveTrailbyId(String TrailId) {
+
+        //Learning trail object and return to UI so that can get data.
+        return null;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 }

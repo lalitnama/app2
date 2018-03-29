@@ -1,6 +1,7 @@
 package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import adapter.LearningTrailAdapter;
 import fao.ManageLearningTrail;
+import model.LearningTrial;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 import util.Session;
 
@@ -36,7 +39,9 @@ public class LearningTrailActivity extends AppCompatActivity
     ManageLearningTrail trailhelper;
     // Session Manager Class
     Session session;
-
+    private ArrayList<LearningTrial> learningTrails = new ArrayList<>();
+    private String userId;
+    SwipeController swipeController = null;
 
 
     FirebaseAuth mAuth;
@@ -50,7 +55,14 @@ public class LearningTrailActivity extends AppCompatActivity
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mAdapter=new LearningTrailAdapter(LearningTrailActivity.this,trailhelper.retrieve());
+                learningTrails.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    LearningTrial learningTrial = ds.getValue(LearningTrial.class);
+                    if (learningTrial.getUserid().equals(userId)) {
+                        learningTrails.add(learningTrial);
+                    }
+                }
+                mAdapter = new LearningTrailAdapter(LearningTrailActivity.this, learningTrails);
                 recyclerView.setAdapter(mAdapter);
             }
 
@@ -72,12 +84,6 @@ public class LearningTrailActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Session class instance
-        session = new Session(getApplicationContext());
-        // get user data from session
-        HashMap<String, String> user = session.getUserDetails();
-        // email
-        final String userid = user.get(Session.USER_ID);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -87,33 +93,24 @@ public class LearningTrailActivity extends AppCompatActivity
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         //.setAction("Action", null).show();
                 Intent i = new Intent(LearningTrailActivity.this, AddLearningTrailActivity.class);
-                i.putExtra("USER_ID",userid);
                 startActivity(i);
                // displayInputDialog();
             }
         });
 
 
-      //  DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-          //      this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //drawer.addDrawerListener(toggle);
-        //toggle.syncState();
-
-        //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //navigationView.setNavigationItemSelectedListener(this);
 
 
         mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener=new FirebaseAuth.AuthStateListener() {
+        userId = mAuth.getCurrentUser().getUid();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() ==null){
+                if (firebaseAuth.getCurrentUser() == null) {
                     Intent i = new Intent(LearningTrailActivity.this, MainActivity.class);
                     startActivity(i);
-                }else{
-
+                } else {
+                    userId = mAuth.getCurrentUser().getUid();
                 }
 
             }
@@ -135,7 +132,7 @@ public class LearningTrailActivity extends AppCompatActivity
 
 
         //INITIALIZE FIREBASE DB
-        db= FirebaseDatabase.getInstance().getReference("LearningTrail").child(userid);
+        db= FirebaseDatabase.getInstance().getReference("LearningTrail");
         trailhelper=new ManageLearningTrail(db);
 
         //ADAPTER
@@ -143,13 +140,36 @@ public class LearningTrailActivity extends AppCompatActivity
         mAdapter=new LearningTrailAdapter(LearningTrailActivity.this,trailhelper.retrieve());
         recyclerView.setAdapter(mAdapter);
 
+        //adding swipe function
+        swipeController = new SwipeController(new SwipeControllerActions() {
+            @Override
+            public void onRightClicked(int position) {
+                //mAdapter.players.remove(position);
+                //learningTrails.remove(position);
+                deleteTrail(position);
+                mAdapter.notifyItemRemoved(position);
+                mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
+            }
 
+            @Override
+            public void onLeftClicked(int position) {
+                //Redirect to Edit activity with data.
+                Intent i = new Intent(LearningTrailActivity.this, EditLearningTrailActivity.class);
+                i.putExtra("LearningTrailId", learningTrails.get(position).getLearningtrailid());
+                startActivity(i);
+            }
+        });
 
-        //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        //recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        //recyclerView.setAdapter(mAdapter);
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(recyclerView);
+
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
+
 
 
 
@@ -217,5 +237,8 @@ public class LearningTrailActivity extends AppCompatActivity
         }
 
 
-
+    public void deleteTrail(int position){
+        LearningTrial lt = learningTrails.get(position);
+        db.child(lt.getLearningtrailid()).setValue(null);
+    }
 }

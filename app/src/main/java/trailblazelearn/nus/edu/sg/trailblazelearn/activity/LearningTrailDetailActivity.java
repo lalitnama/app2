@@ -19,11 +19,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 import adapter.TrailStationAdapter;
 import fao.ManageTrailStation;
+import model.TrailStation;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
+import util.Constants;
+import util.ItemClickListener;
 
-public class LearningTrailDetailActivity extends AppCompatActivity {
+public class LearningTrailDetailActivity extends AppCompatActivity implements ItemClickListener {
 
     private TrailStationAdapter mstationAdapter;
     DatabaseReference db;
@@ -34,6 +39,8 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
     private  LearningTrailDetailActivity mPActivity;
     private Fragment fags;
     TextView nameTxt,descTxt, propTxt;
+    ArrayList<TrailStation> trailStationList = new ArrayList<>();
+    private String userId;
 
 
     @Override
@@ -44,7 +51,13 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mstationAdapter=new TrailStationAdapter(LearningTrailDetailActivity.this,trailstationhelper.stationretrieve());
+                trailStationList.clear();
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    TrailStation trailStation = ds.getValue(TrailStation.class);
+                    trailStationList.add(trailStation);
+                }
+
+                mstationAdapter=new TrailStationAdapter(LearningTrailDetailActivity.this,trailStationList, LearningTrailDetailActivity.this);
                 stationrecyclerView.setAdapter(mstationAdapter);
             }
 
@@ -68,20 +81,20 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
 
         nameTxt = (TextView) findViewById(R.id.nameDetailTxt);
         descTxt= (TextView) findViewById(R.id.descDetailTxt);
-        propTxt = (TextView) findViewById(R.id.propellantDetailTxt);
+       // propTxt = (TextView) findViewById(R.id.propellantDetailTxt);
 
         //GET INTENT
         Intent i=this.getIntent();
 
         //RECEIVE DATA
-        String name=i.getExtras().getString("LEARNING_TRAIL_ID");
+        String trailId=i.getExtras().getString("LEARNING_TRAIL_ID");
         String desc=i.getExtras().getString("LEARNING_TRAIL_NAME");
-        String propellant=i.getExtras().getString("LEARNING_TRAIL_NAME");
+        userId = i.getExtras().getString("USER_ID");
 
         //BIND DATA
-        nameTxt.setText(name);
+        nameTxt.setText(trailId);
         descTxt.setText(desc);
-        propTxt.setText(propellant);
+        //propTxt.setText(userId);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -105,12 +118,11 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
 
 
         //INITIALIZE FIREBASE DB
-        db= FirebaseDatabase.getInstance().getReference("TrailStation").child(i.getExtras().getString("LEARNING_TRAIL_ID"));
-        trailstationhelper=new ManageTrailStation(db);
+        db= FirebaseDatabase.getInstance().getReference("TrailStation").child(trailId);
 
         //ADAPTER
 
-        mstationAdapter=new TrailStationAdapter(this,trailstationhelper.stationretrieve());
+        mstationAdapter=new TrailStationAdapter(this,trailStationList, null);
         stationrecyclerView.setAdapter(mstationAdapter);
 
         Button saveBtn= (Button) findViewById(R.id.add_trail_station_click);
@@ -119,16 +131,17 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();
-
                 Intent k = getIntent();
                 String trailidval=k.getExtras().getString("LEARNING_TRAIL_ID");
                 String trailname=k.getExtras().getString("LEARNING_TRAIL_NAME");
+                String userid=k.getExtras().getString("USER_ID");
 
                 Intent i = new Intent(LearningTrailDetailActivity.this, AddTrailStationActivity.class);
 
 
                 i.putExtra("LEARNING_TRAIL_ID",trailidval);
                 i.putExtra("LEARNING_TRAIL_NAME",trailname);
+                i.putExtra("USER_ID",userid);
 
                 startActivity(i);
                  //displayInputDialog();
@@ -149,6 +162,16 @@ public class LearningTrailDetailActivity extends AppCompatActivity {
 
 
 
+    @Override
+    public void onItemClick(int pos) {
+        Intent i = new Intent(this, TrailStationDetailActivity.class);
+        i.putExtra(Constants.USER_ID, userId);
+        i.putExtra(Constants.LEARN_TRAIL_ID, trailStationList.get(pos).getTrailid());
+        i.putExtra(Constants.TRIAL_STATION_ID,trailStationList.get(pos).getTrailstationid());
+        i.putExtra(Constants.STATION_NAME, trailStationList.get(pos).getStationname());
+        i.putExtra(Constants.INSTRUCTION, trailStationList.get(pos).getInstruction());
+        startActivity(i);
+    }
 
 
 

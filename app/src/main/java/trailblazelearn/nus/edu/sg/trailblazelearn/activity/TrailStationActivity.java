@@ -5,19 +5,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import adapter.TrailStationAdapter;
 import fao.ManageTrailStation;
@@ -34,8 +33,8 @@ public class TrailStationActivity extends AppCompatActivity {
     Session session;
 
     private Button bAdd;
-    private EditText learningsessionID;
-
+    private EditText trailIdEt;
+    String trailId = null;
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -49,39 +48,75 @@ public class TrailStationActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        learningsessionID= (EditText) findViewById(R.id.addSessionName);
+        trailIdEt= (EditText) findViewById(R.id.addSessionName);
 
-        Button bAdd= (Button) findViewById(R.id.btn_enqiry);
-       final String lsessionname=learningsessionID.getText().toString();
-        db= FirebaseDatabase.getInstance().getReference("TrailStation").child(lsessionname);
+        final Button getTrailBtn= (Button) findViewById(R.id.btn_enqiry);
+        final String lsessionname=trailIdEt.getText().toString();
+        db= FirebaseDatabase.getInstance().getReference("TrailStation");
 
-        bAdd.setOnClickListener(new View.OnClickListener() {
+
+        if(!TextUtils.isEmpty(trailIdEt.getText().toString())){
+            trailId = trailIdEt.getText().toString();
+            getTrailBtn.setEnabled(true);
+        }
+
+        trailIdEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!TextUtils.isEmpty(trailIdEt.getText().toString())){
+                    trailId = trailIdEt.getText().toString();
+                    getTrailBtn.setEnabled(true);
+                }
+            }
+        });
+
+        getTrailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                db.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Intent i = new Intent(TrailStationActivity.this, TrailStationsListActivity.class);
+                i.putExtra("trail_id", trailId);
+                startActivity(i);
+
+                //db.addListenerForSingleValueEvent(new ValueEventListener() {
+                   // @Override
+                  //  public void onDataChange(DataSnapshot dataSnapshot) {
                       //  for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                         //    String lsessionname=learningsessionID.getText().toString();
                           //  String name = (String) messageSnapshot.getKey();
                             //Toast.makeText(TrailStationActivity.this, name, Toast.LENGTH_SHORT).show();
                         //}
-                    String dd=dataSnapshot.getKey();
+                    //String dd=dataSnapshot.getKey();
 
 
-                        if(dataSnapshot.getKey()==lsessionname){
-                            Toast.makeText(TrailStationActivity.this, "user exist", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(TrailStationActivity.this, "user doesn't exist", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                      //  if(dataSnapshot.getKey()==lsessionname){
+                        //    Toast.makeText(TrailStationActivity.this, "user exist", Toast.LENGTH_SHORT).show();
+                        //}else{
+                          //  Toast.makeText(TrailStationActivity.this, "user doesn't exist", Toast.LENGTH_SHORT).show();
+                        //}
+                    //}
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                   // @Override
+                    //public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                    //}
+                //});
+
+
+
+
+
             }
         });
 

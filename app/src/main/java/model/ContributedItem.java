@@ -1,54 +1,48 @@
 package model;
 
-import java.util.Date;
-
 /**
  * Created by Asif on 3/17/2018.
  */
 
 public class ContributedItem {
 
-    String trailstationid,learningtrailid,userid,fileurl,filedescription;
-    Date timestamp;
-    int itemid;
+    String trailStationId, learnTrailId, userid, fileUrl, discussion;
+    String timestamp;
+    String itemId;
     public ContributedItem() {
     }
 
-    public ContributedItem(String trailstationid, String learningtrailid, String userid, String fileurl, String filedescription, Date timestamp, int itemid) {
-        this.trailstationid = trailstationid;
-        this.learningtrailid = learningtrailid;
+    public ContributedItem(String trailstationid, String learningtrailid, String userid, String fileurl, String filedescription, String timestamp, String itemid) {
+        this.trailStationId = trailstationid;
+        this.learnTrailId = learningtrailid;
         this.userid = userid;
-        this.fileurl = fileurl;
-        this.filedescription = filedescription;
+        this.fileUrl = fileurl;
+        this.discussion = filedescription;
         this.timestamp = timestamp;
-        this.itemid = itemid;
+        this.itemId = itemid;
     }
 
-    public String getTrailstationid() {
-        return trailstationid;
+    public String getTrailStationId() {
+        return trailStationId;
     }
 
-    public String getLearningtrailid() {
-        return learningtrailid;
+    public String getLearnTrailId() {
+        return learnTrailId;
     }
 
     public String getUserid() {
         return userid;
     }
 
-    public String getFileurl() {
-        return fileurl;
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public String getFiledescription() {
-        return filedescription;
+    public String getDiscussion() {
+        return discussion;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public int getItemid() {
-        return itemid;
+    public String getItemId() {
+        return itemId;
     }
 }
