@@ -29,10 +29,11 @@ import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 public class AddLearningTrailActivity extends AppCompatActivity {
 
     private Button saveBtn, bAdd;
-    private EditText trailName, trailID, userID,addTrailDate;
+    private EditText trailName, addTrailDate;
     DatePickerDialog datePickerDialog;
     Calendar currentCal = Calendar.getInstance();
     Calendar selectedDate = Calendar.getInstance();
+    String userId = null;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
 
@@ -60,8 +61,6 @@ public class AddLearningTrailActivity extends AppCompatActivity {
         //    actionBar.setDisplayHomeAsUpEnabled(true);
        // }
         trailName= (EditText) findViewById(R.id.addTrailName);
-        trailID= (EditText) findViewById(R.id.addTrailID);
-        userID= (EditText) findViewById(R.id.addUserID);
         addTrailDate= (EditText) findViewById(R.id.addTrailDate);
         Button saveBtn= (Button) findViewById(R.id.btn_save);
        // setListeners();
@@ -88,6 +87,7 @@ public class AddLearningTrailActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getCurrentUser().getUid();
         mAuthListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -95,7 +95,7 @@ public class AddLearningTrailActivity extends AppCompatActivity {
                     Intent i = new Intent(AddLearningTrailActivity.this, MainActivity.class);
                     startActivity(i);
                 }else{
-
+                    userId = firebaseAuth.getCurrentUser().getUid();
                 }
 
             }
@@ -103,7 +103,7 @@ public class AddLearningTrailActivity extends AppCompatActivity {
 
 
         //INITIALIZE FIREBASE DB
-        db= FirebaseDatabase.getInstance().getReference("LearningTrail");
+        db= FirebaseDatabase.getInstance().getReference("LearningTrial");
         trailhelper=new ManageLearningTrail(db);
 
 
@@ -117,55 +117,36 @@ public class AddLearningTrailActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
     private void getLearningTrail()
     {
-        String tailname=trailName.getText().toString();
-        String trailid=trailID.getText().toString();
-        String userid=userID.getText().toString();
-        String id = db.push().getKey();
-        String username=userID.getText().toString();
-        Date c = Calendar.getInstance().getTime();
+        try {
+            String trailname = trailName.getText().toString();
+            Date c = Calendar.getInstance().getTime();
 
-       // String g=addTrailDate.getText().toString();
+             String g=addTrailDate.getText().toString();
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c);
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            String formattedDate = df.format(new Date(g));
 
-        Long tsLong = System.currentTimeMillis()/1000;
-        String ts = tsLong.toString();
+            Long tsLong = System.currentTimeMillis() / 1000;
+            String ts = tsLong.toString();
+            String trailId = db.push().getKey();
 
-        //SET DATA
-        LearningTrial s=new LearningTrial(trailid,userid,formattedDate,tailname,ts,tailname);
-
-
-
-        //SIMPLE VALIDATION
-        if(tailname != null && tailname.length()>0)
-        {
-            //THEN SAVE
-            if(trailhelper.save(s))
-            {
-                //IF SAVED CLEAR EDITXT
-
+            //SET DATA
+            LearningTrial s = new LearningTrial(trailId, userId, formattedDate, trailname, ts, trailname);
+            //SIMPLE VALIDATION
+            if (trailname != null && trailname.length() > 0) {
+                db.child(s.getLearningtrailid()).setValue(s);
                 Toast.makeText(AddLearningTrailActivity.this, getString(R.string.save_successful),
                         Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(AddLearningTrailActivity.this, LearningTrailActivity.class);
                 startActivity(i);
-              //  mAdapter=new LearningTrailAdapter(this,trailhelper.retrieve());
-               // recyclerView.setAdapter(mAdapter);
-
-
+            } else {
+                Toast.makeText(AddLearningTrailActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
             }
-        }else
-        {
-            Toast.makeText(AddLearningTrailActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(AddLearningTrailActivity.this, "Date format should be valid.", Toast.LENGTH_SHORT).show();
         }
     }
 

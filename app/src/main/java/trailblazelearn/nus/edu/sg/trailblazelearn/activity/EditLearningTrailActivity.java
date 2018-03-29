@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,19 +31,15 @@ import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 public class EditLearningTrailActivity extends AppCompatActivity {
 
     private Button saveBtn, bAdd;
-    private EditText trailName, trailID, userID,addTrailDate;
+    private EditText trailName,addTrailDate;
     DatePickerDialog datePickerDialog;
     Calendar currentCal = Calendar.getInstance();
     Calendar selectedDate = Calendar.getInstance();
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+    String userId = null;
+    String trailId = null;
 
-
-    private RecyclerView recyclerView;
-    private LearningTrailAdapter mAdapter;
     DatabaseReference db;
-    ManageLearningTrail trailhelper;
-
-
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -52,16 +49,14 @@ public class EditLearningTrailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_learning_trail);
 
+        if(getIntent() != null)
+            trailId = getIntent().getStringExtra("LearningTrailId");
         //Get data to populate
         //INITIALIZE FIREBASE DB
-        db= FirebaseDatabase.getInstance().getReference();
-        trailhelper=new ManageLearningTrail(db);
-        LearningTrial lt = trailhelper.retrieveTrailbyId(savedInstanceState.getString("LearningTrailId"));
+        db= FirebaseDatabase.getInstance().getReference("LearningTrial");
 
 
         trailName= (EditText) findViewById(R.id.addTrailName);
-        trailID= (EditText) findViewById(R.id.addTrailID);
-        userID= (EditText) findViewById(R.id.addUserID);
         addTrailDate= (EditText) findViewById(R.id.addTrailDate);
         Button saveBtn= (Button) findViewById(R.id.btn_save);
        // setListeners();
@@ -92,6 +87,7 @@ public class EditLearningTrailActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getCurrentUser().getUid();
         mAuthListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -99,33 +95,20 @@ public class EditLearningTrailActivity extends AppCompatActivity {
                     Intent i = new Intent(EditLearningTrailActivity.this, MainActivity.class);
                     startActivity(i);
                 }else{
-
+                    userId = mAuth.getCurrentUser().getUid();
                 }
 
             }
         };
 
-
         //INITIALIZE FIREBASE DB
-        db= FirebaseDatabase.getInstance().getReference();
-        trailhelper=new ManageLearningTrail(db);
-
-
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getLearningTrail();
             }
         });
-
     }
-
-
-
-
-
-
-
 
     public void onClick(View v) {
         switch (v.getId()) {
@@ -134,7 +117,6 @@ public class EditLearningTrailActivity extends AppCompatActivity {
                 break;
             case R.id.btn_save:
                 getLearningTrail();
-
                 break;
 
         }
@@ -142,42 +124,33 @@ public class EditLearningTrailActivity extends AppCompatActivity {
 
     private void getLearningTrail()
     {
-        String tailname=trailName.getText().toString();
-        String trailid=trailID.getText().toString();
-        String userid=userID.getText().toString();
-        String id = db.push().getKey();
-        String username=userID.getText().toString();
-        Date c = Calendar.getInstance().getTime();
+        try {
+            String trailName = this.trailName.getText().toString();
+            String g = addTrailDate.getText().toString();
 
-       // String g=addTrailDate.getText().toString();
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            String formattedDate = df.format(new Date(g));
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c);
+            Long tsLong = System.currentTimeMillis() / 1000;
+            String ts = tsLong.toString();
 
-        Long tsLong = System.currentTimeMillis()/1000;
-        String ts = tsLong.toString();
+            //SET DATA
+            LearningTrial s = new LearningTrial(trailId, userId, formattedDate, trailName, ts, trailName);
 
-        //SET DATA
-        LearningTrial s=new LearningTrial(trailid,userid,formattedDate,tailname,ts,tailname);
+            //SIMPLE VALIDATION
+            if (trailName != null && trailName.length() > 0) {
+                db.child(trailId).setValue(s);
+                Toast.makeText(EditLearningTrailActivity.this, getString(R.string.update_successful),
+                        Toast.LENGTH_SHORT).show();
 
-
-
-        //SIMPLE VALIDATION
-        if(tailname != null && tailname.length()>0)
-        {
-            //THEN SAVE
-            if(trailhelper.save(s))
-            {
-                //IF SAVED CLEAR EDITXT
-
-                mAdapter=new LearningTrailAdapter(EditLearningTrailActivity.this,trailhelper.retrieve());
-                recyclerView.setAdapter(mAdapter);
-
-
+                Intent i = new Intent(EditLearningTrailActivity.this, LearningTrailActivity.class);
+                startActivity(i);
+                finish();
+            } else {
+                Toast.makeText(EditLearningTrailActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
             }
-        }else
-        {
-            Toast.makeText(EditLearningTrailActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(EditLearningTrailActivity.this, "Date format should be valid.", Toast.LENGTH_SHORT).show();
         }
     }
     public boolean onTouch(View v, MotionEvent event) {

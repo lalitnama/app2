@@ -68,7 +68,4 @@
         android:layout_below="@id/add_trail_station_click"
         android:scrollbars="vertical"
         />
-
-
-
 </RelativeLayout>

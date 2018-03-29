@@ -1,6 +1,7 @@
 package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,33 +25,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import adapter.LearningTrailAdapter;
-import fao.ManageLearningTrail;
-import trailblazelearn.nus.edu.sg.trailblazelearn.R;
+import java.util.ArrayList;
 
-import android.graphics.Canvas;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import adapter.LearningTrailAdapter;
+import model.LearningTrial;
+import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 
 
 public class LearningTrailActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private boolean mTwoPane;
-    private RecyclerView recyclerView;
-    private LearningTrailAdapter mAdapter;
-    DatabaseReference db;
-    ManageLearningTrail trailhelper;
-
-    SwipeController swipeController = null;
     public static final String LEARNING_TRAIL_ID = "trailblazelearn.nus.edu.sg.trailblazelearn.learningtrailid";
     public static final String USER_ID = "trailblazelearn.nus.edu.sg.trailblazelearn.userid";
     public static final String TRAIL_NAME = "trailblazelearn.nus.edu.sg.trailblazelearn.trailname";
+    DatabaseReference db;
 
-
-
-
+    SwipeController swipeController = null;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
+    private boolean mTwoPane;
+    private RecyclerView recyclerView;
+    private LearningTrailAdapter mAdapter;
+    private ArrayList<LearningTrial> learningTrails = new ArrayList<>();
+    private String userId;
 
     @Override
     protected void onStart() {
@@ -59,7 +57,14 @@ public class LearningTrailActivity extends AppCompatActivity
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mAdapter=new LearningTrailAdapter(LearningTrailActivity.this,trailhelper.retrieve());
+                learningTrails.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    LearningTrial learningTrial = ds.getValue(LearningTrial.class);
+                    if (learningTrial.getUserid().equals(userId)) {
+                        learningTrails.add(learningTrial);
+                    }
+                }
+                mAdapter = new LearningTrailAdapter(LearningTrailActivity.this, learningTrails);
                 recyclerView.setAdapter(mAdapter);
             }
 
@@ -69,9 +74,6 @@ public class LearningTrailActivity extends AppCompatActivity
             }
         });
     }
-
-
-
 
 
     @Override
@@ -86,10 +88,10 @@ public class LearningTrailActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        //.setAction("Action", null).show();
+                //.setAction("Action", null).show();
                 Intent i = new Intent(LearningTrailActivity.this, AddLearningTrailActivity.class);
                 startActivity(i);
-               // displayInputDialog();
+                // displayInputDialog();
             }
         });
 
@@ -105,15 +107,15 @@ public class LearningTrailActivity extends AppCompatActivity
 
 
         mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener=new FirebaseAuth.AuthStateListener() {
+        userId = mAuth.getCurrentUser().getUid();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() ==null){
+                if (firebaseAuth.getCurrentUser() == null) {
                     Intent i = new Intent(LearningTrailActivity.this, MainActivity.class);
                     startActivity(i);
-                }else{
-
+                } else {
+                    userId = mAuth.getCurrentUser().getUid();
                 }
 
             }
@@ -131,12 +133,11 @@ public class LearningTrailActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //INITIALIZE FIREBASE DB
-        db= FirebaseDatabase.getInstance().getReference("LearningTrail");
-        trailhelper=new ManageLearningTrail(db);
+        db = FirebaseDatabase.getInstance().getReference("LearningTrial");
 
         //ADAPTER
 
-        mAdapter=new LearningTrailAdapter(LearningTrailActivity.this,trailhelper.retrieve());
+        mAdapter = new LearningTrailAdapter(LearningTrailActivity.this, learningTrails);
         recyclerView.setAdapter(mAdapter);
 
         //adding swipe function
@@ -144,18 +145,17 @@ public class LearningTrailActivity extends AppCompatActivity
             @Override
             public void onRightClicked(int position) {
                 //mAdapter.players.remove(position);
-                trailhelper.remove(position);
+                //learningTrails.remove(position);
+                deleteTrail(position);
                 mAdapter.notifyItemRemoved(position);
                 mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
             }
 
             @Override
             public void onLeftClicked(int position) {
-                String trailId = trailhelper.getTrailId(position);
-                //ToDO
                 //Redirect to Edit activity with data.
                 Intent i = new Intent(LearningTrailActivity.this, EditLearningTrailActivity.class);
-                i.putExtra("LearningTrailId",trailhelper.getTrailId(position));
+                i.putExtra("LearningTrailId", learningTrails.get(position).getLearningtrailid());
                 startActivity(i);
             }
         });
@@ -169,19 +169,7 @@ public class LearningTrailActivity extends AppCompatActivity
                 swipeController.onDraw(c);
             }
         });
-
-
-        //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        //recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        //recyclerView.setAdapter(mAdapter);
-
-
-
     }
-
-
 
 
     @Override
@@ -229,23 +217,23 @@ public class LearningTrailActivity extends AppCompatActivity
         }
     }
 
-        protected void logoutUser() {
-            FirebaseAuth.getInstance().signOut();
-            mAuth = FirebaseAuth.getInstance();
+    protected void logoutUser() {
+        FirebaseAuth.getInstance().signOut();
+        mAuth = FirebaseAuth.getInstance();
 
-            mAuthListener=new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    if(firebaseAuth.getCurrentUser() ==null){
-                        Intent i = new Intent(LearningTrailActivity.this, MainActivity.class);
-                        startActivity(i);
-                    }else{
-
-                    }
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    Intent i = new Intent(LearningTrailActivity.this, MainActivity.class);
+                    startActivity(i);
+                } else {
 
                 }
-            };
-        }
+
+            }
+        };
+    }
 
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -271,5 +259,10 @@ public class LearningTrailActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void deleteTrail(int position){
+        LearningTrial lt = learningTrails.get(position);
+        db.child(lt.getLearningtrailid()).setValue(null);
     }
 }

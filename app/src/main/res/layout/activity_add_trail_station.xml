@@ -50,6 +50,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:paddingLeft="4dp"
+                android:visibility="gone"
                 />
             <EditText
                 android:id="@+id/addTrailSequenceID"
@@ -59,6 +60,7 @@
                 android:layout_marginEnd="20dp"
                 android:hint="Enter SequenceID"
                 android:layout_below="@id/text_trail_sequence_id"
+                android:visibility="gone"
                 />
 
             <TextView
@@ -92,6 +94,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_below="@id/addInstruction"
                 android:paddingLeft="4dp"
+                android:visibility="gone"
                 />
             <EditText
                 android:id="@+id/addGeoLocation"
@@ -103,6 +106,7 @@
                 android:layout_below="@id/text_geolocation"
                 android:singleLine="true"
                 android:hint="Enter Geo Location"
+                android:visibility="gone"
                 />
             <Button
                 android:id="@+id/btn_tail_save"

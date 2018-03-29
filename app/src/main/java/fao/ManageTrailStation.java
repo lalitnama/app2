@@ -60,8 +60,6 @@ public class ManageTrailStation {
     }
 
 
-
-
     //READ THEN RETURN ARRAYLIST
     public ArrayList<TrailStation> stationretrieve() {
         db.addChildEventListener(new ChildEventListener() {
@@ -92,11 +90,6 @@ public class ManageTrailStation {
             }
         });
 
-
         return stationTrials;
     }
-
-
-
-
 }

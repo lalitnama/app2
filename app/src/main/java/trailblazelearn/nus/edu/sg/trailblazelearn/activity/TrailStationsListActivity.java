@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,24 +16,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import adapter.TrailStationAdapter;
-import fao.ManageTrailStation;
 import model.TrailStation;
 import trailblazelearn.nus.edu.sg.trailblazelearn.R;
+import util.Constants;
 import util.ItemClickListener;
 
 public class TrailStationsListActivity extends AppCompatActivity implements ItemClickListener {
 
-    private String trailId = null;
+    private String learnTrailId = null;
     private TrailStationAdapter mstationAdapter;
     DatabaseReference db;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     private RecyclerView stationrecyclerView;
-    ManageTrailStation trailstationhelper;
-    private List<TrailStation> mTrailstationValues;
+    private List<TrailStation> trailStationList = new ArrayList<>();
+    private String userId;
 
     @Override
     protected void onStart() {
@@ -44,9 +44,14 @@ public class TrailStationsListActivity extends AppCompatActivity implements Item
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mstationAdapter=new TrailStationAdapter(TrailStationsListActivity.this,trailstationhelper.stationretrieve(), TrailStationsListActivity.this);
-                mTrailstationValues = trailstationhelper.stationretrieve();
-                if(mTrailstationValues.size() == 0){
+
+                trailStationList.clear();
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    TrailStation trailStation = ds.getValue(TrailStation.class);
+                    trailStationList.add(trailStation);
+                }
+                mstationAdapter=new TrailStationAdapter(TrailStationsListActivity.this, trailStationList, TrailStationsListActivity.this);
+                if(trailStationList.size() == 0){
                     Toast.makeText(TrailStationsListActivity.this, "Data Not Available For this ID.",Toast.LENGTH_SHORT).show();
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -70,11 +75,11 @@ public class TrailStationsListActivity extends AppCompatActivity implements Item
         setContentView(R.layout.activity_trail_stations_list);
 
         if(getIntent() !=null ){
-            trailId = getIntent().getStringExtra("trail_id");
+            learnTrailId = getIntent().getStringExtra("trail_id");
         }
 
         mAuth = FirebaseAuth.getInstance();
-
+        userId = mAuth.getCurrentUser().getUid();
         mAuthListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -82,22 +87,19 @@ public class TrailStationsListActivity extends AppCompatActivity implements Item
                     Intent i = new Intent(TrailStationsListActivity.this, MainActivity.class);
                     startActivity(i);
                 }else{
-
+                    userId = mAuth.getCurrentUser().getUid();
                 }
-
             }
         };
-
 
         stationrecyclerView = findViewById(R.id.trail_station_list);
         stationrecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
         //INITIALIZE FIREBASE DB
-        db= FirebaseDatabase.getInstance().getReference("TrailStation").child(trailId);
-        trailstationhelper=new ManageTrailStation(db);
+        db= FirebaseDatabase.getInstance().getReference("TrailStation").child(learnTrailId);
 
-        mstationAdapter=new TrailStationAdapter(this,trailstationhelper.stationretrieve(), this);
+        mstationAdapter=new TrailStationAdapter(this,trailStationList, this);
         stationrecyclerView.setAdapter(mstationAdapter);
 
     }
@@ -105,7 +107,11 @@ public class TrailStationsListActivity extends AppCompatActivity implements Item
     @Override
     public void onItemClick(int pos) {
         Intent i = new Intent(this, TrailStationDetailActivity.class);
-
+        i.putExtra(Constants.USER_ID, userId);
+        i.putExtra(Constants.LEARN_TRAIL_ID, learnTrailId);
+        i.putExtra(Constants.TRIAL_STATION_ID,trailStationList.get(pos).getTrailstationid());
+        i.putExtra(Constants.STATION_NAME, trailStationList.get(pos).getStationname());
+        i.putExtra(Constants.INSTRUCTION, trailStationList.get(pos).getInstruction());
         startActivity(i);
     }
 }

@@ -29,20 +29,18 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
     public List<LearningTrial> mValues;
     public boolean mTwoPane;
 
-
-
     public LearningTrailAdapter(Context parent, List<LearningTrial> cartList) {
         this.context = parent;
         this.mValues = cartList;
     }
-
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         holder.learningtrailid.setText(mValues.get(position).getLearningtrailid());
         holder.trailname.setText(mValues.get(position).getTrailname());
-        holder.userid.setText(mValues.get(position).getUserid());
+        //holder.userid.setText(mValues.get(position).getUserid());
+        holder.userid.setText(mValues.get(position).getTraildate());
         holder.thumbnail.setImageResource(R.drawable.ic_hdr_weak_black_18dp);
 
         holder.itemView.setTag(mValues.get(position));
@@ -57,8 +55,6 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
         });
 
     }
-
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

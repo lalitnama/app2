@@ -7,22 +7,29 @@ package model;
 public class TrailStation {
     String trailstationid;
     String trailid;
-    String glocation;
     String stationname;
     String instruction;
-    int sequenceid;
+    double longitude;
+    double latitude;
 
-    public TrailStation(String trailstationid, String trailid, String glocation, String stationname, String instruction, int sequenceid) {
+    public TrailStation(String trailstationid, String trailid, String stationname, String instruction, double latitude, double longitude) {
         this.trailstationid = trailstationid;
         this.trailid = trailid;
-        this.glocation = glocation;
         this.stationname = stationname;
         this.instruction = instruction;
-        this.sequenceid = sequenceid;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-
     public TrailStation() {
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
     }
 
     public String getTrailstationid() {
@@ -41,14 +48,6 @@ public class TrailStation {
         this.trailid = trailid;
     }
 
-    public String getGlocation() {
-        return glocation;
-    }
-
-    public void setGlocation(String glocation) {
-        this.glocation = glocation;
-    }
-
     public String getStationname() {
         return stationname;
     }
@@ -64,16 +63,4 @@ public class TrailStation {
     public void setInstruction(String instruction) {
         this.instruction = instruction;
     }
-
-    public int getSequenceid() {
-        return sequenceid;
-    }
-
-    public void setSequenceid(int sequenceid) {
-        this.sequenceid = sequenceid;
-    }
-
-
-
-
 }
