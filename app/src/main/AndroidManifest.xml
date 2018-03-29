@@ -34,9 +34,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LearningTrailDetailActivity"
+            android:label="@string/title_activity_learning_trails"
             android:parentActivityName=".activity.LearningTrailActivity" />
         <activity
             android:name=".activity.AddLearningTrailActivity"
+            android:label="@string/title_activity_add_learning_trail"
             android:parentActivityName=".activity.LearningTrailActivity" />
 
         <!-- fb integration -->
@@ -62,16 +64,19 @@
         </activity>
         <activity
             android:name=".activity.AddTrailStationActivity"
+            android:label="@string/title_activity_add_trail_station"
             android:parentActivityName=".activity.LearningTrailDetailActivity" />
         <activity
             android:name=".activity.TrailStationActivity"
+            android:label="@string/title_activity_participant"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.EditLearningTrailActivity" />
-        <activity android:name=".activity.TrailStationDetailActivity" />
+        <activity android:name=".activity.TrailStationDetailActivity"   android:label="@string/title_activity_trail_stations" />
         <activity
             android:name=".activity.PostActivity"
+            android:label="@string/post_details"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.TrailStationsListActivity"></activity>
+        <activity android:name=".activity.TrailStationsListActivity"  android:label="@string/title_activity_participant"></activity>
     </application>
 
 </manifest>

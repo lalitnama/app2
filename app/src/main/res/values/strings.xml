@@ -41,14 +41,15 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_learning_trail">LearningTrailActivity</string>
-    <string name="title_activity_learning_trails">Learning Trails</string>
+    <string name="title_activity_learning_trail">Learning Trail </string>
+    <string name="title_activity_learning_trails">Learning Trail Details</string>
     <string name="title_activity_add_learning_trail">Add Learning Trails</string>
     <string name="title_activity_add_trail_station">Add Trail Station</string>
-    <string name="title_activity_participant">ParticipantActivity</string>
-    <string name="title_activity_trail_stations">Trail Stations</string>
+    <string name="title_activity_participant">Trail Stations</string>
+    <string name="title_activity_trail_stations">Trail Station Details</string>
     <string name="title_activity_edit_learn_trail">Edit Learn Trail</string>
     <string name="title_activity_trail_stations_details">Trail Station Details</string>
+    <string name="post_details">Post</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
 
