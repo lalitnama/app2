@@ -40,8 +40,7 @@ public class AddTrailStationActivity extends AppCompatActivity {
     FirebaseAuth.AuthStateListener mAuthListener;
     private RecyclerView stationrecyclerView;
 
-    private double longitude;
-    private double latitude;
+    private String gps;
     private final int REQUEST_PERMISSION_FOR_LOCATION = 0x05;
 
 
@@ -49,7 +48,7 @@ public class AddTrailStationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trail_station);
-        getUserCurrentLocation();
+
 
         trailStationName= (EditText) findViewById(R.id.addTrailStationName);
         instruction= (EditText) findViewById(R.id.addInstruction);
@@ -80,6 +79,8 @@ public class AddTrailStationActivity extends AppCompatActivity {
                 getLearningTrailStations();
             }
         });
+
+        getUserCurrentLocation();
 
     }
 
@@ -140,12 +141,12 @@ public class AddTrailStationActivity extends AppCompatActivity {
                         bestLocation = location;
                     }
                 }
+
                 Location location = bestLocation;
+                gpsLocation.setText("1234"+","+"123");
                 if(location != null) {
-                    longitude = location.getLongitude();
-                    latitude = location.getLatitude();
                     //Set Location in field
-                    gpsLocation.setText(latitude+","+longitude);
+                    gpsLocation.setText(location.getLongitude()+","+location.getLatitude());
                 }
             }
         }
