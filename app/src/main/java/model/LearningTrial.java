@@ -11,7 +11,7 @@ public  class LearningTrial {
 
 
 
-    String learningtrailid,userid,traildate,trailname,thumbnail,timestamp;
+    String learningtrailid,userid,traildate,trailname,timestamp;
 
 
     public LearningTrial() {
@@ -25,7 +25,6 @@ public  class LearningTrial {
         this.traildate = traildate;
         this.trailname = trailname;
         this.timestamp = timestamp;
-        this.thumbnail=thumbnail;
     }
 
     public String getLearningtrailid() {
@@ -48,9 +47,6 @@ public  class LearningTrial {
         return timestamp;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
 
 
 
@@ -69,11 +65,7 @@ public  class LearningTrial {
     public void setTrailname(String trailname) {
         this.trailname = trailname;
     }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
+    
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
