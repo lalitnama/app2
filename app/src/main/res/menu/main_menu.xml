@@ -5,13 +5,13 @@
     <item
         android:id="@+id/action_trainer"
         android:orderInCategory="100"
-        android:title="Trainer"
+        android:title="Switch to Trainer"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_participant"
         android:orderInCategory="100"
-        android:title="Participant"
+        android:title="Switch to Participant"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
