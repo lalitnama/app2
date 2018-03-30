@@ -130,6 +130,7 @@ public class TrailStationActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        menu.findItem(R.id.action_participant).setVisible(false);
         return true;
     }
 

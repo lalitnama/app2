@@ -33,7 +33,7 @@ import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 public class AddTrailStationActivity extends AppCompatActivity {
 
     private Button saveBtn1;
-    private EditText trailStationName,sequenceID,instruction,geolocation;
+    private EditText trailStationName,sequenceID,instruction, gpsLocation;
     private TrailStationAdapter mstationAdapter;
     DatabaseReference db;
     ManageTrailStation trailstationhelper;
@@ -41,8 +41,7 @@ public class AddTrailStationActivity extends AppCompatActivity {
     FirebaseAuth.AuthStateListener mAuthListener;
     private RecyclerView stationrecyclerView;
 
-    private double longitude;
-    private double latitude;
+    private String gps;
     private final int REQUEST_PERMISSION_FOR_LOCATION = 0x05;
 
 
@@ -50,10 +49,11 @@ public class AddTrailStationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trail_station);
-        getUserCurrentLocation();
+
 
         trailStationName= (EditText) findViewById(R.id.addTrailStationName);
         instruction= (EditText) findViewById(R.id.addInstruction);
+        gpsLocation = (EditText) findViewById(R.id.gpsLocation);
         saveBtn1= (Button) findViewById(R.id.btn_tail_save);
 
         mAuth = FirebaseAuth.getInstance();
@@ -80,6 +80,8 @@ public class AddTrailStationActivity extends AppCompatActivity {
                 getLearningTrailStations();
             }
         });
+
+        getUserCurrentLocation();
 
     }
 
@@ -121,9 +123,10 @@ public class AddTrailStationActivity extends AppCompatActivity {
         String lTrailId=j.getExtras().getString("LEARNING_TRAIL_ID");
         String lTrailName=j.getExtras().getString("LEARNING_TRAIL_NAME");
         String userId=j.getExtras().getString("USER_ID");
+        String gpsLocationString = this.gpsLocation.getText().toString();
 
         //SET DATA
-        TrailStation s = new TrailStation(stationId,lTrailId,trailStationName,instruc,latitude, longitude);
+        TrailStation s = new TrailStation(stationId,lTrailId,trailStationName,instruc,gpsLocationString);
 
         //SIMPLE VALIDATION
         if(trailStationName != null && trailStationName.length()>0)
@@ -166,10 +169,12 @@ public class AddTrailStationActivity extends AppCompatActivity {
                         bestLocation = location;
                     }
                 }
+
                 Location location = bestLocation;
+                gpsLocation.setText("1234"+","+"123");
                 if(location != null) {
-                    longitude = location.getLongitude();
-                    latitude = location.getLatitude();
+                    //Set Location in field
+                    gpsLocation.setText(location.getLongitude()+","+location.getLatitude());
                 }
             }
         }
