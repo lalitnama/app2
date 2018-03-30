@@ -40,6 +40,9 @@ public class PostActivity extends AppCompatActivity {
         fileName = "c://demo.png";
         Button post_saveBtn = findViewById(R.id.post_save);
 
+        Button post_browseBtn = findViewById(R.id.btn_browseFile);
+
+
         post_saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +54,15 @@ public class PostActivity extends AppCompatActivity {
                 finish();
             }
         });
+        post_browseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
 
 
 

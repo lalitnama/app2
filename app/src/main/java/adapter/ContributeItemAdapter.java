@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -49,10 +50,13 @@ public class ContributeItemAdapter extends RecyclerView.Adapter<ContributeItemAd
     static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvDiss;
         ImageView ivImage;
+        public RelativeLayout viewBackground, viewForeground;
         public MyViewHolder(View itemView) {
             super(itemView);
             tvDiss = itemView.findViewById(R.id.tv_discussion);
             ivImage = itemView.findViewById(R.id.iv_image);
+            viewBackground = itemView.findViewById(R.id.view_background_Contributed_Item);
+            viewForeground = itemView.findViewById(R.id.view_foreground_Contributed_Item);
         }
     }
 }

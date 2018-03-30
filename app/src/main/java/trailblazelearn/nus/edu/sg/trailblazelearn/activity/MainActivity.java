@@ -1,5 +1,6 @@
 package trailblazelearn.nus.edu.sg.trailblazelearn.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     List<Account> accounts;
     List<String> emailval;
     private Session session;//global variable
+
+    private ProgressDialog progressDialog;
 
 
 
@@ -217,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = null;
         if(training_mod.getSelectedItem().equals("Trainers")){
             i = new Intent(MainActivity.this, LearningTrailActivity.class);
+
         }else{
             i = new Intent(MainActivity.this, TrailStationActivity.class);
         }
@@ -228,6 +232,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signIn() {
+        progressDialog = new ProgressDialog(MainActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -272,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
                           // Intent i = new Intent(getApplicationContext(), LearningTrailActivity.class);
                            // startActivity(i);
                             moveToNextActivity();
-
+                            progressDialog.dismiss();
                             Toast.makeText(MainActivity.this, user.getDisplayName(), Toast.LENGTH_SHORT).show();
                            // updateUI(user);
                         } else {

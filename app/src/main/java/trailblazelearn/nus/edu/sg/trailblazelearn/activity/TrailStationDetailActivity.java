@@ -41,12 +41,12 @@ public class TrailStationDetailActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab_Item);
         recyclerView = findViewById(R.id.rv_station_items);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        fab.setOnClickListener(new View.OnClickListener() {
+       fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addItem();
             }
-        });
+       });
         TextView tvStationName = findViewById(R.id.tv_station_name);
         TextView tvInstruction = findViewById(R.id.tv_instruction);
 

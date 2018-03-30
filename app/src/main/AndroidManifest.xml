@@ -71,12 +71,17 @@
             android:label="@string/title_activity_participant"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.EditLearningTrailActivity" />
-        <activity android:name=".activity.TrailStationDetailActivity"   android:label="@string/title_activity_trail_stations" />
+        <activity
+            android:name=".activity.TrailStationDetailActivity"
+            android:label="@string/title_activity_trail_stations" />
         <activity
             android:name=".activity.PostActivity"
             android:label="@string/post_details"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.TrailStationsListActivity"  android:label="@string/title_activity_participant"></activity>
+        <activity
+            android:name=".activity.TrailStationsListActivity"
+            android:label="@string/title_activity_participant" />
+        <activity android:name=".activity.PostDetailActivity"></activity>
     </application>
 
 </manifest>
