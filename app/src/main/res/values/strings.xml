@@ -8,7 +8,9 @@
     <string name="update_successful">Trail Updated Successfully.</string>
     <string name="trail_station_added_successful">Trail Station Added Successfully.</string>
     <string name="trail_name">Trail Name</string>
+    <string name="trail_code">Trail Code</string>
     <string name="hint_trail_name">Enter Trail Name</string>
+    <string name="hint_trail_code">Enter Trail Code</string>
     <string name="trail_id_name">TrailID</string>
     <string name="hint_trail_id_name">Enter Trail ID</string>
     <string name="user_name">UserID</string>
@@ -23,6 +25,10 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+
+    <string name="label_trail_id">Trail ID:</string>
+    <string name="label_trail_name">Trail Name:</string>
+
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
