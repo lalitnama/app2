@@ -9,27 +9,21 @@ public class TrailStation {
     String trailid;
     String stationname;
     String instruction;
-    double longitude;
-    double latitude;
+    String gps;
 
-    public TrailStation(String trailstationid, String trailid, String stationname, String instruction, double latitude, double longitude) {
+    public TrailStation(String trailstationid, String trailid, String stationname, String instruction, String gpsLocationString) {
         this.trailstationid = trailstationid;
         this.trailid = trailid;
         this.stationname = stationname;
         this.instruction = instruction;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.gps = gpsLocationString;
     }
 
     public TrailStation() {
     }
 
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
+    public String getGPS() {
+        return gps;
     }
 
     public String getTrailstationid() {

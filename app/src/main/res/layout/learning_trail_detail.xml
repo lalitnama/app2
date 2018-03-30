@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/labelTrailID"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
@@ -29,18 +29,15 @@
         android:id="@+id/nameDetailTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/labelTrailID"
-        android:textStyle="normal"
-        android:paddingLeft="4dp"
+        android:layout_alignBottom="@id/labelTrailID"
+        android:layout_alignLeft="@id/labelTrailID"
+        android:layout_marginLeft="60dp"
         android:text="Text..."
-        />
+        android:textStyle="normal" />
 
     <TextView
         android:id="@+id/labelTrailName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/nameDetailTxt"
         android:layout_marginTop="20dp"
@@ -56,13 +53,11 @@
         android:id="@+id/descDetailTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/labelTrailName"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:textStyle="normal"
-        android:paddingLeft="4dp"
+        android:layout_alignBottom="@id/labelTrailName"
+        android:layout_alignLeft="@id/labelTrailName"
+        android:layout_marginLeft="80dp"
         android:text="Text..."
+        android:textStyle="normal"
         />
 
 

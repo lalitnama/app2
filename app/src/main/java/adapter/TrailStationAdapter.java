@@ -34,9 +34,6 @@ public class TrailStationAdapter extends RecyclerView.Adapter<TrailStationAdapte
     }
 
     public void onBindViewHolder(TrailStationViewHolder holder, int position) {
-       // holder.trailstationid.setText(mTrailstationValues.get(position).getTrailstationid());
-        //holder.trailstationid.setText(mTrailstationValues.get(position).getTrailstationid());
-        holder.learningtrailid.setText(mTrailstationValues.get(position).getStationname());
         holder.stationname.setText(mTrailstationValues.get(position).getInstruction());
         holder.thumbnail.setImageResource(R.drawable.ic_add_circle_black_24dp);
 
@@ -51,15 +48,13 @@ public class TrailStationAdapter extends RecyclerView.Adapter<TrailStationAdapte
         return new TrailStationViewHolder(view);
     }
     public class TrailStationViewHolder extends RecyclerView.ViewHolder {
-        public TextView trailstationid,learningtrailid,stationname,instruction;
+        public TextView stationname, instruction;
         public ImageView thumbnail;
         public RelativeLayout trail_view_background, trail_view_foreground;
         int position;
 
         public TrailStationViewHolder(View view) {
             super(view);
-            trailstationid = (TextView) view.findViewById(R.id.trailstationid);
-            learningtrailid = (TextView) view.findViewById(R.id.learningtrailid);
             stationname = (TextView) view.findViewById(R.id.stationname);
             instruction = (TextView) view.findViewById(R.id.instruction);
             thumbnail = view.findViewById(R.id.thumbnail);
