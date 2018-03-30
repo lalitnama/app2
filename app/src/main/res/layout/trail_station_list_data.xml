@@ -46,34 +46,13 @@
             android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/trailstationid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/thumbnail"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:maxLines="1"
-            android:textColor="@color/item_name"
-            android:textSize="17dp" />
-
-        <TextView
-            android:id="@+id/learningtrailid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/trailstationid"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/thumbnail"
-            android:textColor="@color/description"
-            android:textSize="12dp" />
-
-        <TextView
             android:id="@+id/stationname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/learningtrailid"
             android:layout_toRightOf="@id/thumbnail"
             android:textColor="@color/colorAccent"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:text="Station name"/>
 
         <TextView
             android:id="@+id/instruction"
@@ -81,8 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/stationname"
             android:layout_toRightOf="@id/thumbnail"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold" />
+            android:textColor="@color/item_name"
+            android:textStyle="normal"
+            android:text="Instruction"/>
 
     </RelativeLayout>
 

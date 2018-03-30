@@ -32,7 +32,7 @@ import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 public class AddTrailStationActivity extends AppCompatActivity {
 
     private Button saveBtn1;
-    private EditText trailStationName,sequenceID,instruction,geolocation;
+    private EditText trailStationName,sequenceID,instruction, gpsLocation;
     private TrailStationAdapter mstationAdapter;
     DatabaseReference db;
     ManageTrailStation trailstationhelper;
@@ -53,6 +53,7 @@ public class AddTrailStationActivity extends AppCompatActivity {
 
         trailStationName= (EditText) findViewById(R.id.addTrailStationName);
         instruction= (EditText) findViewById(R.id.addInstruction);
+        gpsLocation = (EditText) findViewById(R.id.gpsLocation);
         saveBtn1= (Button) findViewById(R.id.btn_tail_save);
 
         mAuth = FirebaseAuth.getInstance();
@@ -93,9 +94,10 @@ public class AddTrailStationActivity extends AppCompatActivity {
         String lTrailId=j.getExtras().getString("LEARNING_TRAIL_ID");
         String lTrailName=j.getExtras().getString("LEARNING_TRAIL_NAME");
         String userId=j.getExtras().getString("USER_ID");
+        String gpsLocationString = this.gpsLocation.getText().toString();
 
         //SET DATA
-        TrailStation s = new TrailStation(stationId,lTrailId,trailStationName,instruc,latitude, longitude);
+        TrailStation s = new TrailStation(stationId,lTrailId,trailStationName,instruc,gpsLocationString);
 
         //SIMPLE VALIDATION
         if(trailStationName != null && trailStationName.length()>0)
@@ -142,6 +144,8 @@ public class AddTrailStationActivity extends AppCompatActivity {
                 if(location != null) {
                     longitude = location.getLongitude();
                     latitude = location.getLatitude();
+                    //Set Location in field
+                    gpsLocation.setText(latitude+","+longitude);
                 }
             }
         }
