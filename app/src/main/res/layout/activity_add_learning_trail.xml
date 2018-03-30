@@ -76,6 +76,27 @@
                 android:singleLine="true"
                 android:hint="Date and time"
                 />
+
+            <TextView
+                android:id="@+id/textTrailCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/trail_code"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:paddingLeft="4dp"
+                android:layout_below="@id/addTrailDate"
+                />
+            <EditText
+                android:id="@+id/addTrailCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_below="@id/textTrailCode"
+                android:hint="@string/hint_trail_code"
+                />
             <Button
                 android:id="@+id/btn_save"
                 android:layout_width="match_parent"
@@ -84,7 +105,7 @@
                 android:layout_margin="20dp"
                 android:background="@color/colorPrimary"
                 android:text="@string/save"
-                android:layout_below="@id/addTrailDate"
+                android:layout_below="@id/addTrailCode"
                 android:textColor="@android:color/white"
                 />
 

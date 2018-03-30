@@ -29,7 +29,7 @@ import trailblazelearn.nus.edu.sg.trailblazelearn.R;
 public class AddLearningTrailActivity extends AppCompatActivity {
 
     private Button saveBtn, bAdd;
-    private EditText trailName, trailID, userID,addTrailDate;
+    private EditText trailName, trailID, userID, addTrailDate, trailCode;
     DatePickerDialog datePickerDialog;
     Calendar currentCal = Calendar.getInstance();
     Calendar selectedDate = Calendar.getInstance();
@@ -62,6 +62,7 @@ public class AddLearningTrailActivity extends AppCompatActivity {
        // }
         trailName= (EditText) findViewById(R.id.addTrailName);
         addTrailDate= (EditText) findViewById(R.id.addTrailDate);
+        trailCode = (EditText) findViewById(R.id.addTrailCode);
         Button saveBtn= (Button) findViewById(R.id.btn_save);
        // setListeners();
 
@@ -112,7 +113,7 @@ public class AddLearningTrailActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLearningTrail();
+                saveLearningTrail();
             }
         });
 
@@ -120,36 +121,40 @@ public class AddLearningTrailActivity extends AppCompatActivity {
 
 
 
-    private void getLearningTrail()
+    private void saveLearningTrail()
     {
         try {
             String trailname = trailName.getText().toString();
-            Date c = Calendar.getInstance().getTime();
+            String trailcode = trailCode.getText().toString();
+            String trailDate =addTrailDate.getText().toString();
 
-            String g=addTrailDate.getText().toString();
+            //Validation
+            if (trailname == null && trailname.length() == 0
+                    && trailcode == null && trailcode.length() == 0
+                    && trailDate == null && trailDate.length() == 0) {
+                Toast.makeText(AddLearningTrailActivity.this, "Trail Name, Trail Code & Trail Date should not be empty", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                String formattedDate = df.format(new Date(trailDate));
 
-            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-            String formattedDate = df.format(new Date(g));
+                Long tsLong = System.currentTimeMillis() / 1000;
+                String ts = tsLong.toString();
+                String trailid = formattedDate+ "-" +trailcode;
 
-            Long tsLong = System.currentTimeMillis() / 1000;
-            String ts = tsLong.toString();
-            String trailid=formattedDate+ "-" +trailname;
+                //SET DATA
+                LearningTrial s = new LearningTrial(trailid, userId, formattedDate, trailname, ts, trailname);
 
-            //SET DATA
-            LearningTrial s = new LearningTrial(trailid, userId, formattedDate, trailname, ts, trailname);
-            //SIMPLE VALIDATION
-            if (trailname != null && trailname.length() > 0) {
                 db.child(s.getLearningtrailid()).setValue(s);
                 Toast.makeText(AddLearningTrailActivity.this, getString(R.string.save_successful),
                         Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(AddLearningTrailActivity.this, LearningTrailActivity.class);
                 startActivity(i);
-            } else {
-                Toast.makeText(AddLearningTrailActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
             }
+
         }catch (Exception e){
-            Toast.makeText(AddLearningTrailActivity.this, "Date format should be valid.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddLearningTrailActivity.this, "Something went wrong, please try again.", Toast.LENGTH_SHORT).show();
         }
     }
 

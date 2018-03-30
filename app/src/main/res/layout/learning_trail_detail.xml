@@ -14,61 +14,81 @@
 
 
     <TextView
+        android:id="@+id/labelTrailID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textStyle="bold"
+        android:paddingLeft="4dp"
+        android:text="@string/label_trail_id"
+        />
+
+    <TextView
         android:id="@+id/nameDetailTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/labelTrailID"
+        android:textStyle="normal"
         android:paddingLeft="4dp"
-        android:textStyle="bold" />
+        android:text="Text..."
+        />
+
+    <TextView
+        android:id="@+id/labelTrailName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nameDetailTxt"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textStyle="bold"
+        android:paddingLeft="4dp"
+        android:text="@string/label_trail_name"
+        />
 
 
     <TextView
         android:id="@+id/descDetailTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView8"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@id/labelTrailName"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textStyle="normal"
         android:paddingLeft="4dp"
-        android:textStyle="bold" />
+        android:text="Text..."
+        />
+
+
+
 
 
     <Button
         android:id="@+id/add_trail_station_click"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="98dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="30dp"
         android:background="@color/colorPrimary"
         android:text="Add Trail Station"
-        android:textColor="@android:color/white" />
+        android:layout_below="@id/descDetailTxt"
+        android:textColor="@android:color/white"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/trail_station_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="140dp"
-        android:scrollbars="vertical" />
+        android:layout_below="@id/add_trail_station_click"
+        android:scrollbars="vertical"
+        />
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/nameDetailTxt"
-        android:layout_below="@+id/nameDetailTxt"
-        android:text="Trail Name" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nameDetailTxt"
-        android:text="Trail ID" />
 
 
 </RelativeLayout>
