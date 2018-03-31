@@ -52,7 +52,7 @@ public class TrailStationsListActivity extends AppCompatActivity implements Item
                 }
                 mstationAdapter=new TrailStationAdapter(TrailStationsListActivity.this, trailStationList, TrailStationsListActivity.this);
                 if(trailStationList.size() == 0){
-                    Toast.makeText(TrailStationsListActivity.this, "Data Not Available For this ID.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TrailStationsListActivity.this, "Trail ID is invalid or does not have any Trail station.",Toast.LENGTH_SHORT).show();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
