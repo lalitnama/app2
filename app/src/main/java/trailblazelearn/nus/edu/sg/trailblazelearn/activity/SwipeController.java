@@ -35,7 +35,7 @@ class SwipeController extends ItemTouchHelper.Callback {
 
     private SwipeControllerActions buttonsActions = null;
 
-    private static final float buttonWidth = 60;
+    private static final float buttonWidth = 300;
 
     public SwipeController(SwipeControllerActions buttonsActions) {
         this.buttonsActions = buttonsActions;

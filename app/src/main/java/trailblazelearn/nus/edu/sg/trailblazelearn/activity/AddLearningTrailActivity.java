@@ -129,9 +129,9 @@ public class AddLearningTrailActivity extends AppCompatActivity {
             String trailDate =addTrailDate.getText().toString();
 
             //Validation
-            if (trailname == null && trailname.length() == 0
-                    && trailcode == null && trailcode.length() == 0
-                    && trailDate == null && trailDate.length() == 0) {
+            if (trailname == null || trailname.length() == 0
+                    || trailcode == null || trailcode.length() == 0
+                    || trailDate == null || trailDate.length() == 0) {
                 Toast.makeText(AddLearningTrailActivity.this, "Trail Name, Trail Code & Trail Date should not be empty", Toast.LENGTH_SHORT).show();
                 return;
             } else {

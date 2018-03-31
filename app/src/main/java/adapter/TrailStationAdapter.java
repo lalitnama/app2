@@ -34,7 +34,8 @@ public class TrailStationAdapter extends RecyclerView.Adapter<TrailStationAdapte
     }
 
     public void onBindViewHolder(TrailStationViewHolder holder, int position) {
-        holder.stationname.setText(mTrailstationValues.get(position).getInstruction());
+        holder.stationname.setText(mTrailstationValues.get(position).getStationname());
+        holder.instruction.setText(mTrailstationValues.get(position).getInstruction());
         holder.thumbnail.setImageResource(R.drawable.wall3);
 
         holder.itemView.setTag(mTrailstationValues.get(position));

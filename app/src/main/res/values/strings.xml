@@ -42,7 +42,7 @@
     </string-array>
     <string name="title_module_list">Modules</string>
     <string name="title_module_detail">Module Detail</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Setting</string>
     <string name="logout">Log Out</string>
     <string name="delete">DELETE</string>
     <string name="title_activity_layout">LayoutActivity</string>

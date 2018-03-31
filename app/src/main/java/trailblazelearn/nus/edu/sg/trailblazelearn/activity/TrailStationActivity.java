@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -141,18 +142,9 @@ public class TrailStationActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
         switch (item.getItemId()) {
             case R.id.action_settings:
-                // try {
-                //     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
-                // } catch (android.content.ActivityNotFoundException anfe) {
-                //   startActivity(new Intent(Intent.ACTION_VIEW,
-                //           Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
-                //  }
+                Toast.makeText(TrailStationActivity.this, "For Future use.", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_trainer:
                 Intent i = new Intent(TrailStationActivity.this, LearningTrailActivity.class);

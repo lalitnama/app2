@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="Station"
+        android:text="Trail Station"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_station_name" app:layout_constraintStart_toStartOf="parent"/>
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="Instrustion"
+        android:text="Instruction"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_instruction" app:layout_constraintStart_toStartOf="parent"/>
