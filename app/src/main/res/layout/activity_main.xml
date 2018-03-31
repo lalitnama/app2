@@ -43,7 +43,10 @@
                 android:layout_height="wrap_content"
                 android:entries="@array/training_mode"
                 android:prompt="@string/training_prompt"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="@dimen/fab_margin"
+                android:layout_marginRight="@dimen/fab_margin"/>
 
 
         </android.support.design.widget.TextInputLayout>

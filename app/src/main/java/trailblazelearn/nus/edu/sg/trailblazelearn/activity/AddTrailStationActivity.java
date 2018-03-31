@@ -143,7 +143,6 @@ public class AddTrailStationActivity extends AppCompatActivity {
                 }
 
                 Location location = bestLocation;
-                gpsLocation.setText("1234"+","+"123");
                 if(location != null) {
                     //Set Location in field
                     gpsLocation.setText(location.getLongitude()+","+location.getLatitude());
