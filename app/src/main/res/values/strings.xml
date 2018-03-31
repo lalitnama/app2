@@ -14,6 +14,8 @@
     <string name="trail_id_name">TrailID</string>
     <string name="hint_trail_id_name">Enter Trail ID</string>
     <string name="user_name">UserID</string>
+    <string name="post_desc_hint">Add Description ...</string>
+    <string name="new_post_btn_hint">Post Comments</string>
     <string name="user_name_hint">Enter UserID</string>
     <string name="select_date">Trail Date</string>
     <string name="prompt_password">Password (optional)</string>

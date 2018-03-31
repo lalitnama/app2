@@ -106,12 +106,16 @@ public class TrailStationsListActivity extends AppCompatActivity implements Item
 
     @Override
     public void onItemClick(int pos) {
-        Intent i = new Intent(this, TrailStationDetailActivity.class);
+        Intent i = new Intent(this, PostDetailActivity.class);
         i.putExtra(Constants.USER_ID, userId);
         i.putExtra(Constants.LEARN_TRAIL_ID, learnTrailId);
-        i.putExtra(Constants.TRIAL_STATION_ID,trailStationList.get(pos).getTrailstationid());
-        i.putExtra(Constants.STATION_NAME, trailStationList.get(pos).getStationname());
-        i.putExtra(Constants.INSTRUCTION, trailStationList.get(pos).getInstruction());
+
+        String stationid=trailStationList.get(pos).getTrailstationid();
+        String stationname =trailStationList.get(pos).getStationname();
+        String instruction=trailStationList.get(pos).getInstruction();
+        i.putExtra(Constants.TRIAL_STATION_ID,stationid);
+        i.putExtra(Constants.STATION_NAME, stationname);
+        i.putExtra(Constants.INSTRUCTION, instruction);
         startActivity(i);
     }
 

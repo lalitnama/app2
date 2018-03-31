@@ -1,12 +1,15 @@
 package adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -21,6 +24,7 @@ import trailblazelearn.nus.edu.sg.trailblazelearn.activity.TrailStationDetailAct
 public class ContributeItemAdapter extends RecyclerView.Adapter<ContributeItemAdapter.MyViewHolder> {
 
     private List<ContributedItem> itemList;
+    public Context context;
 
     public ContributeItemAdapter(TrailStationDetailActivity trailStationDetailActivity, List<ContributedItem> itemList) {
         this.itemList =itemList;
@@ -28,6 +32,7 @@ public class ContributeItemAdapter extends RecyclerView.Adapter<ContributeItemAd
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context=parent.getContext();
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.contributed_item, parent, false);
         return new MyViewHolder(view);
@@ -35,7 +40,12 @@ public class ContributeItemAdapter extends RecyclerView.Adapter<ContributeItemAd
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.tvDiss.setText(itemList.get(position).getDiscussion());
+        holder.blog_desc.setText(itemList.get(position).getDiscussion());
+        holder.blog_title.setText(itemList.get(position).getTitle());
+        String image_url = itemList.get(position).getFileUrl();
+        holder.setImageUrl(context,image_url);
+
+
     }
 
     @Override
@@ -47,16 +57,31 @@ public class ContributeItemAdapter extends RecyclerView.Adapter<ContributeItemAd
         this.itemList  = itemList;
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tvDiss;
-        ImageView ivImage;
-        public RelativeLayout viewBackground, viewForeground;
+    public  class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView blog_desc,blog_title;
+        ImageView blog_image;
+
+
         public MyViewHolder(View itemView) {
             super(itemView);
-            tvDiss = itemView.findViewById(R.id.tv_discussion);
-            ivImage = itemView.findViewById(R.id.iv_image);
-            viewBackground = itemView.findViewById(R.id.view_background_Contributed_Item);
-            viewForeground = itemView.findViewById(R.id.view_foreground_Contributed_Item);
+            blog_desc = itemView.findViewById(R.id.blog_desc);
+            blog_title = itemView.findViewById(R.id.blog_title);
+
+
+
         }
+
+        public void setImageUrl(Context ctx, String imageUrl){
+            blog_image = itemView.findViewById(R.id.blog_image);
+
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.image_placeholder);
+            Glide.with(ctx).applyDefaultRequestOptions(requestOptions).load(imageUrl).into(blog_image);
+
+        }
+
+
     }
+
+
 }

@@ -6,17 +6,25 @@ package model;
 
 public class ContributedItem {
 
-    String trailStationId, learnTrailId, userid, fileUrl, discussion;
+    String trailStationId;
+    String learnTrailId;
+    String userid;
+    String fileUrl;
+
+
+    String title;
+    String discussion;
     String timestamp;
     String itemId;
     public ContributedItem() {
     }
 
-    public ContributedItem(String trailstationid, String learningtrailid, String userid, String fileurl, String filedescription, String timestamp, String itemid) {
+    public ContributedItem(String trailstationid, String learningtrailid, String userid, String fileurl, String title, String filedescription, String timestamp, String itemid) {
         this.trailStationId = trailstationid;
         this.learnTrailId = learningtrailid;
         this.userid = userid;
         this.fileUrl = fileurl;
+        this.title = title;
         this.discussion = filedescription;
         this.timestamp = timestamp;
         this.itemId = itemid;
@@ -45,4 +53,15 @@ public class ContributedItem {
     public String getItemId() {
         return itemId;
     }
+
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
 }

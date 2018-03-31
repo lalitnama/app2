@@ -5,11 +5,11 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +41,7 @@ public class LearningTrailDetailActivity extends AppCompatActivity implements It
     TextView nameTxt,descTxt, propTxt;
     ArrayList<TrailStation> trailStationList = new ArrayList<>();
     private String userId;
+    private FloatingActionButton fab;
 
 
     @Override
@@ -81,6 +82,9 @@ public class LearningTrailDetailActivity extends AppCompatActivity implements It
 
         nameTxt = (TextView) findViewById(R.id.nameDetailTxt);
         descTxt= (TextView) findViewById(R.id.descDetailTxt);
+        fab = findViewById(R.id.add_trail_station_click);
+
+
        // propTxt = (TextView) findViewById(R.id.propellantDetailTxt);
 
         //GET INTENT
@@ -125,12 +129,10 @@ public class LearningTrailDetailActivity extends AppCompatActivity implements It
         mstationAdapter=new TrailStationAdapter(this,trailStationList, null);
         stationrecyclerView.setAdapter(mstationAdapter);
 
-        Button saveBtn= (Button) findViewById(R.id.add_trail_station_click);
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //.setAction("Action", null).show();
+            public void onClick(View v) {
                 Intent k = getIntent();
                 String trailidval=k.getExtras().getString("LEARNING_TRAIL_ID");
                 String trailname=k.getExtras().getString("LEARNING_TRAIL_NAME");
@@ -144,18 +146,30 @@ public class LearningTrailDetailActivity extends AppCompatActivity implements It
                 i.putExtra("USER_ID",userid);
 
                 startActivity(i);
-                 //displayInputDialog();
-
-                //Intent k= getIntent();
-               // String trailidval=k.getExtras().getString("LEARNING_TRAIL_ID");
-                //String useridval=k.getExtras().getString("USER_ID");
-                //Toast.makeText(LearningTrailDetailActivity.this, "oclick", Toast.LENGTH_SHORT).show();
-
-
-
-
             }
         });
+       // Button saveBtn= (Button) findViewById(R.id.add_trail_station_click);
+        //saveBtn.setOnClickListener(new View.OnClickListener() {
+         //   @Override
+           // public void onClick(View view) {
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //.setAction("Action", null).show();
+              //  Intent k = getIntent();
+             //   String trailidval=k.getExtras().getString("LEARNING_TRAIL_ID");
+             //   String trailname=k.getExtras().getString("LEARNING_TRAIL_NAME");
+              //  String userid=k.getExtras().getString("USER_ID");
+
+              //  Intent i = new Intent(LearningTrailDetailActivity.this, AddTrailStationActivity.class);
+
+
+               // i.putExtra("LEARNING_TRAIL_ID",trailidval);
+              //  i.putExtra("LEARNING_TRAIL_NAME",trailname);
+              //  i.putExtra("USER_ID",userid);
+
+              //  startActivity(i);
+
+           // }
+       // });
 
     }
 

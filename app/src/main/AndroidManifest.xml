@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -34,7 +37,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LearningTrailDetailActivity"
-            android:label="@string/title_activity_learning_trails"
+            android:label="@string/title_activity_add_trail_station"
             android:parentActivityName=".activity.LearningTrailActivity" />
         <activity
             android:name=".activity.AddLearningTrailActivity"
@@ -73,15 +76,18 @@
         <activity android:name=".activity.EditLearningTrailActivity" />
         <activity
             android:name=".activity.TrailStationDetailActivity"
-            android:label="@string/title_activity_trail_stations" />
+            android:label="@string/title_activity_trail_stations"
+            />
         <activity
             android:name=".activity.PostActivity"
-            android:label="@string/post_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.TrailStationsListActivity"
             android:label="@string/title_activity_participant" />
         <activity android:name=".activity.PostDetailActivity"></activity>
+
+
     </application>
+
 
 </manifest>

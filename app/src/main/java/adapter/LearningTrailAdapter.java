@@ -47,7 +47,7 @@ public class LearningTrailAdapter extends RecyclerView.Adapter<LearningTrailAdap
         holder.learningtrailid.setText(mValues.get(position).getLearningtrailid());
         holder.trailname.setText(mValues.get(position).getTrailname());
        // holder.userid.setText(mValues.get(position).getUserid());
-        holder.thumbnail.setImageResource(R.drawable.ic_hdr_weak_black_18dp);
+        holder.thumbnail.setImageResource(R.drawable.wall4);
 
         holder.itemView.setTag(mValues.get(position));
         //holder.itemView.setOnClickListener(mOnClickListener);

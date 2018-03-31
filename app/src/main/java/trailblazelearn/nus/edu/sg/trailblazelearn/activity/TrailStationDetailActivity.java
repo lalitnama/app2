@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -38,15 +37,10 @@ public class TrailStationDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trail_station_detail);
-        fab = findViewById(R.id.fab_Item);
+      //  fab = findViewById(R.id.fab_Item);
         recyclerView = findViewById(R.id.rv_station_items);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-       fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addItem();
-            }
-       });
+
         TextView tvStationName = findViewById(R.id.tv_station_name);
         TextView tvInstruction = findViewById(R.id.tv_instruction);
 

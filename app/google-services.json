@@ -1,47 +1,35 @@
 {
   "project_info": {
-    "project_number": "407528063300",
-    "firebase_url": "https://nusissapp.firebaseio.com",
-    "project_id": "nusissapp",
-    "storage_bucket": "nusissapp.appspot.com"
+    "project_number": "1033226294696",
+    "firebase_url": "https://trailblazeapp.firebaseio.com",
+    "project_id": "trailblazeapp",
+    "storage_bucket": "trailblazeapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:407528063300:android:7693bbae6e78d026",
+        "mobilesdk_app_id": "1:1033226294696:android:7693bbae6e78d026",
         "android_client_info": {
           "package_name": "trailblazelearn.nus.edu.sg.trailblazelearn"
         }
       },
       "oauth_client": [
         {
-          "client_id": "407528063300-4uht5rctee83smidcuddq8k7fq53pfif.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "407528063300-lqbktodatj285up4m1816e4nt33cbka3.apps.googleusercontent.com",
+          "client_id": "1033226294696-febcg3kuf492ld85eue5nvijutca8fbc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "trailblazelearn.nus.edu.sg.trailblazelearn",
-            "certificate_hash": "205c6c80e70b8367fe0469d2e200d0f03412fd44"
+            "certificate_hash": "aa5413d59dbbcd50672c2c7f2c011478ee80e532"
           }
         },
         {
-          "client_id": "407528063300-mvcicgjt9suimdchhs90bjtplrb4gl5h.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "trailblazelearn.nus.edu.sg.trailblazelearn",
-            "certificate_hash": "0763f7bf030fd5170626c0425ad4858fc56941b6"
-          }
-        },
-        {
-          "client_id": "407528063300-5j3dun5pa7gv0q2ot8d2d9l0qg8fpjag.apps.googleusercontent.com",
+          "client_id": "1033226294696-hfto2k1g86s4q5nshbisn48ubh7358lv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCc5wHKbLqmV3OiY1pBRt1VzUfnl1_5_VQ"
+          "current_key": "AIzaSyAdIO3GQBNvLqlfhlrX96waQ6hmxtv0Dto"
         }
       ],
       "services": {
@@ -52,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "407528063300-4uht5rctee83smidcuddq8k7fq53pfif.apps.googleusercontent.com",
+              "client_id": "1033226294696-hfto2k1g86s4q5nshbisn48ubh7358lv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
